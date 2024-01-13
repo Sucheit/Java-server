@@ -6,4 +6,17 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
     </content>
   </component>
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="aston" value="9e4aaece-1571-4c4d-aeed-415cc3d1e4f8" />
+          <factory-entry name="entityManagerFactory" value="9e4aaece-1571-4c4d-aeed-415cc3d1e4f8" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
 </module>
