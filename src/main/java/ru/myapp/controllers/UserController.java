@@ -1,5 +1,6 @@
 package ru.myapp.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,33 +28,33 @@ public class UserController {
     @Loggable
     @GetMapping
     public List<UserResponseDtoShort> getUsers() {
-        return userService.getUsers();
+        return userService.getAllEntities();
     }
 
     @Loggable
     @GetMapping("/{userId}")
     public UserResponseDto getUserById(@PathVariable Integer userId) {
-        return userService.getUserById(userId);
+        return userService.getEntityById(userId);
     }
 
     @Loggable
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.createUser(userRequestDto);
+    public UserResponseDto createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        return userService.createEntity(userRequestDto);
     }
 
     @Loggable
     @PutMapping("/{userId}")
-    public UserResponseDto updateUser(@RequestBody UserRequestDto userRequestDto,
+    public UserResponseDto updateUser(@RequestBody @Valid UserRequestDto userRequestDto,
                                       @PathVariable Integer userId) {
-        return userService.updateUser(userId, userRequestDto);
+        return userService.updateEntity(userId, userRequestDto);
     }
 
     @Loggable
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer userId) {
-        userService.deleteUser(userId);
+        userService.deleteEntityById(userId);
         return ResponseEntity.noContent().build();
     }
 

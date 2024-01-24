@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -33,22 +34,20 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<UserResponseDtoShort> getUsers() {
+    public List<UserResponseDtoShort> getAllEntities() {
         return userMapper.userListToUserResponseDtoShortList(userRepository.findAll());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public UserResponseDto getUserById(Integer userId) {
+    public UserResponseDto getEntityById(Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
-        user.getGroups();
         return userMapper.userToUserResponseDto(user);
     }
 
-    @Transactional
     @Override
-    public UserResponseDto createUser(UserRequestDto userRequestDto) {
+    public UserResponseDto createEntity(UserRequestDto userRequestDto) {
         User user = new User();
         user.setFirstName(userRequestDto.firstName());
         user.setLastName(userRequestDto.lastName());
@@ -56,9 +55,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserResponseDto(user);
     }
 
-    @Transactional
     @Override
-    public UserResponseDto updateUser(Integer userId, UserRequestDto userRequestDto) {
+    public UserResponseDto updateEntity(Integer userId, UserRequestDto userRequestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
         user.setFirstName(userRequestDto.firstName());
@@ -67,15 +65,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserResponseDto(user);
     }
 
-    @Transactional
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteEntityById(Integer userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
         userRepository.deleteById(userId);
     }
 
-    @Transactional
     @Override
     public UserResponseDto addUserToGroup(Integer userId, Integer groupId) {
         User user = userRepository.findById(userId)
@@ -88,7 +84,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserResponseDto(user);
     }
 
-    @Transactional
     @Override
     public UserResponseDto deleteUserFromGroup(Integer userId, Integer groupId) {
         User user = userRepository.findById(userId)
@@ -97,7 +92,7 @@ public class UserServiceImpl implements UserService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(String.format("Group id=%s not found", groupId)));
         if (!groups.contains(group)) {
-            throw new BadRequestException((String.format("User id=%s is not in the group id%s", userId, groupId)));
+            throw new BadRequestException((String.format("User id=%s is not in the group id=%s", userId, groupId)));
         }
         groups.remove(group);
         userRepository.save(user);

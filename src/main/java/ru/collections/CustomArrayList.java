@@ -1,4 +1,4 @@
-package collections;
+package ru.collections;
 
 import java.util.*;
 

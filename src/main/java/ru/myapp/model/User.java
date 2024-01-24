@@ -1,24 +1,24 @@
 package ru.myapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Cacheable
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", updatable = false, nullable = false)
-    private Integer id;
-
+    @NotBlank
+    @Size(min = 2, max = 50)
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NotBlank
+    @Size(min = 2, max = 50)
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -29,18 +29,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups = new HashSet<>();
 
-    public User(Integer id, String firstName, String lastName, Set<Group> groups) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.groups = groups;
-    }
-
     public User() {
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -61,19 +50,6 @@ public class User {
 
     public Set<Group> getGroups() {
         return groups;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override

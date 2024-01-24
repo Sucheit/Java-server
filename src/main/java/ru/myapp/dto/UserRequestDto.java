@@ -1,5 +1,16 @@
 package ru.myapp.dto;
 
-public record UserRequestDto(String firstName,
-                             String lastName) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+
+public record UserRequestDto(
+
+        @NotBlank
+        @Size(min = 2, max = 255)
+        String firstName,
+
+        @NotBlank
+        @Size(min = 2, max = 255)
+        String lastName) {
 }

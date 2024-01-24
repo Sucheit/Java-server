@@ -1,23 +1,26 @@
 package ru.myapp.service;
 
-import ru.myapp.dto.GroupRequestDto;
-import ru.myapp.dto.GroupResponseDto;
-import ru.myapp.dto.GroupResponseDtoShort;
-import ru.myapp.dto.PaidGroupResponseDtoShort;
+import ru.myapp.dto.*;
 
 import java.util.List;
 
-public interface GroupService {
+public interface GroupService extends CrudService<Integer, GroupRequestDto, GroupResponseDto, GroupResponseDtoShort> {
 
-    List<GroupResponseDtoShort> getGroups();
+    List<GroupResponseDtoShort> getAllEntities();
 
-    GroupResponseDto getGroupById(Integer groupId);
+    GroupResponseDto getEntityById(Integer groupId);
 
-    GroupResponseDto createGroup(GroupRequestDto groupRequestDto);
+    GroupResponseDto createEntity(GroupRequestDto groupRequestDto);
 
-    GroupResponseDto updateGroup(Integer groupId, GroupRequestDto groupRequestDto);
+    GroupResponseDto updateEntity(Integer groupId, GroupRequestDto groupRequestDto);
 
-    void deleteGroup(Integer groupId);
+    void deleteEntityById(Integer groupId);
 
     List<PaidGroupResponseDtoShort> getPaidGroups();
+
+    PaidGroupResponseDto createPaidGroup(PaidGroupRequestDto paidGroupRequestDto);
+
+    PaidGroupResponseDto updatePaidGroup(Integer paidGroupId, PaidGroupRequestDto paidGroupRequestDto);
+
+    PaidGroupResponseDto getPaidGroupById(Integer paidGroupId);
 }

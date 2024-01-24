@@ -6,17 +6,17 @@ import ru.myapp.dto.UserResponseDtoShort;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends CrudService<Integer, UserRequestDto, UserResponseDto, UserResponseDtoShort> {
 
-    List<UserResponseDtoShort> getUsers();
+    List<UserResponseDtoShort> getAllEntities();
 
-    UserResponseDto getUserById(Integer userId);
+    UserResponseDto getEntityById(Integer userId);
 
-    UserResponseDto createUser(UserRequestDto userRequestDto);
+    UserResponseDto createEntity(UserRequestDto userRequestDto);
 
-    UserResponseDto updateUser(Integer userId, UserRequestDto userRequestDto);
+    UserResponseDto updateEntity(Integer userId, UserRequestDto userRequestDto);
 
-    void deleteUser(Integer userId);
+    void deleteEntityById(Integer userId);
 
     UserResponseDto addUserToGroup(Integer userId, Integer groupId);
 

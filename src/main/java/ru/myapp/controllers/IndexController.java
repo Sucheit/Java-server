@@ -2,15 +2,15 @@ package ru.myapp.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import ru.myapp.aop.Loggable;
 
 @Controller
-@RequestMapping("/")
 public class IndexController {
 
-    @GetMapping
+    @Loggable
+    @GetMapping(path = "/")
     public String index() {
-        return "index";
+        return "index.html";
     }
 }
 

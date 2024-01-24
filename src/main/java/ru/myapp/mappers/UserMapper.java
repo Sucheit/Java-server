@@ -7,7 +7,7 @@ import ru.myapp.model.User;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = GroupMapper.class)
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserResponseDto userToUserResponseDto(User user);

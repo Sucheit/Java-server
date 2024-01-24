@@ -1,6 +1,9 @@
-import collections.CustomArrayList;
+package ru.collection;
+
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.collections.CustomArrayList;
 
 import java.lang.reflect.Field;
 import java.util.Comparator;

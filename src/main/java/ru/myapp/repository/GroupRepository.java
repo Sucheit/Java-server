@@ -23,4 +23,9 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 
     @Query("SELECT pg FROM PaidGroup pg")
     List<PaidGroup> findAllPaidGroups();
+
+    @EntityGraph(attributePaths = "users")
+    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
+    @Query("select pg from PaidGroup pg where pg.id = ?1")
+    Optional<PaidGroup> findPaidGroupById(@NonNull Integer paidGroupId);
 }

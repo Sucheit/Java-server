@@ -1,17 +1,18 @@
 package ru.myapp.model;
 
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import org.hibernate.validator.constraints.Range;
 
-@Cacheable
+
 @Entity
-@DiscriminatorValue("paid_group")
+@Table(name = "paid_groups")
 public class PaidGroup extends Group {
 
-    @Column(name = "cost")
-    private Integer cost;
+    @Range(min = 10, max = 1000)
+    @Column(name = "cost", nullable = false)
+    protected Integer cost;
 
     public PaidGroup() {
     }
@@ -26,8 +27,11 @@ public class PaidGroup extends Group {
 
     @Override
     public String toString() {
-        return "PaidGroup{" + super.toString() +
+        return "PaidGroup{" +
                 "cost=" + cost +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
