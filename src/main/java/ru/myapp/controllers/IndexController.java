@@ -1,16 +1,23 @@
 package ru.myapp.controllers;
 
-import org.springframework.stereotype.Controller;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.myapp.aop.Loggable;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.io.IOException;
+
+@RestController
 public class IndexController {
 
-    @Loggable
+    @Operation(summary = "Redirect to swagger-ui page")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Index page redirected")})
     @GetMapping(path = "/")
-    public String index() {
-        return "index.html";
+    public void index(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui/index.html");
     }
 }
 

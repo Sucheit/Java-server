@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: test_db
+    image: 'postgres:16-alpine3.19'
+    environment:
+      - 'POSTGRES_DB=test'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=user'
+    ports:
+      - '5432:5432'

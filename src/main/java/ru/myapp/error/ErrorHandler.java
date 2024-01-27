@@ -1,5 +1,6 @@
 package ru.myapp.error;
 
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,9 +16,10 @@ import static ru.myapp.utils.Constants.DATE_TIME_FORMATTER;
 
 @ControllerAdvice
 @ResponseBody
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ErrorHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiError handleThrowable(final Throwable e) {
         return new ApiError("Internal Server error.",
@@ -26,7 +28,7 @@ public class ErrorHandler {
                 LocalDateTime.now().format(DATE_TIME_FORMATTER));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleNotFoundException(final NotFoundException e) {
         return new ApiError("The required resource was not found.",
@@ -35,7 +37,7 @@ public class ErrorHandler {
                 LocalDateTime.now().format(DATE_TIME_FORMATTER));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleBadRequestException(final BadRequestException e) {
         return new ApiError("The request is incorrect.",
@@ -44,7 +46,7 @@ public class ErrorHandler {
                 LocalDateTime.now().format(DATE_TIME_FORMATTER));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handlerMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         return new ApiError("The request is incorrect.",

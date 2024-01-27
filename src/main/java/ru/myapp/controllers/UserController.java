@@ -1,14 +1,20 @@
 package ru.myapp.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.myapp.aop.Loggable;
 import ru.myapp.dto.UserRequestDto;
 import ru.myapp.dto.UserResponseDto;
 import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.error.ApiError;
 import ru.myapp.service.UserService;
 
 import java.util.List;
@@ -25,40 +31,80 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Loggable
+    @Operation(summary = "Get users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found users",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponseDtoShort.class))})})
     @GetMapping
     public List<UserResponseDtoShort> getUsers() {
         return userService.getAllEntities();
     }
 
-    @Loggable
+    @Operation(summary = "Get user by Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found user by Id",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserResponseDto.class))}),
+            @ApiResponse(responseCode = "404", description = "User not request",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @GetMapping("/{userId}")
     public UserResponseDto getUserById(@PathVariable Integer userId) {
         return userService.getEntityById(userId);
     }
 
-    @Loggable
+    @Operation(summary = "User creation")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserResponseDto.class))}),
+            @ApiResponse(responseCode = "400", description = "UserRequestDto not valid",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
         return userService.createEntity(userRequestDto);
     }
 
-    @Loggable
+    @Operation(summary = "User update")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserResponseDto.class))}),
+            @ApiResponse(responseCode = "400", description = "UserRequestDto not valid",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class))),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @PutMapping("/{userId}")
     public UserResponseDto updateUser(@RequestBody @Valid UserRequestDto userRequestDto,
                                       @PathVariable Integer userId) {
         return userService.updateEntity(userId, userRequestDto);
     }
 
-    @Loggable
+    @Operation(summary = "User deleting")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User deleted"),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer userId) {
         userService.deleteEntityById(userId);
         return ResponseEntity.noContent().build();
     }
 
-    @Loggable
+    @Operation(summary = "Adding user to group")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User added to group",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "User or group not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @PostMapping("/{userId}/groups/{groupId}")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto addUserToGroup(@PathVariable Integer userId,
@@ -66,7 +112,14 @@ public class UserController {
         return userService.addUserToGroup(userId, groupId);
     }
 
-    @Loggable
+    @Operation(summary = "Deleting user from group")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted from group",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "User or group not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApiError.class)))})
     @DeleteMapping("/{userId}/groups/{groupId}")
     public UserResponseDto deleteUserToGroup(@PathVariable Integer userId,
                                              @PathVariable Integer groupId) {

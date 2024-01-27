@@ -24,7 +24,7 @@ public class Group extends AbstractEntity {
     @Column(name = "description", nullable = false)
     protected String description;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
             joinColumns = @JoinColumn(name = "group_id"),

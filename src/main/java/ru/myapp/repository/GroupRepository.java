@@ -16,10 +16,6 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
-    @Override
-    @EntityGraph(attributePaths = "users")
-    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
-    Optional<Group> findById(@NonNull Integer groupId);
 
     @Query("SELECT pg FROM PaidGroup pg")
     List<PaidGroup> findAllPaidGroups();
