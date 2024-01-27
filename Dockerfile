@@ -1,4 +1,5 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM amazoncorretto:17-alpine-jdk
 VOLUME /tmp
-COPY target/aston-1.0-SNAPSHOT.jar myapp.jar
-ENTRYPOINT ["java","-jar","/myapp.jar"]
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /app.jar"]
