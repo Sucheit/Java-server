@@ -62,5 +62,4 @@ class UserServiceImplTest {
         assertEquals("lastName1", userSaved.getLastName());
         verify(userRepository, atLeast(1)).save(any(User.class));
     }
-
 }

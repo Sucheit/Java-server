@@ -19,5 +19,4 @@ public class TestDemoApplication {
     PostgreSQLContainer<?> postgresContainer() {
         return new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"));
     }
-
 }

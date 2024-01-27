@@ -1,4 +1,4 @@
-package ru.myapp.integrationtests;
+package ru.myapp.integration;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -27,8 +27,7 @@ public class UserControllerIntegrationTest {
 
     @Container
     @ServiceConnection
-    private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine3.19");
-
+    private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
     @Autowired
     TestRestTemplate testRestTemplate;

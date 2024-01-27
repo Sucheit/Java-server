@@ -71,6 +71,4 @@ public class UserRepositoryTest {
         assertEquals("Natasha", users.get(1).getFirstName());
         assertEquals("Romanoff", users.get(1).getLastName());
     }
-
-
 }
