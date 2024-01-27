@@ -2,6 +2,7 @@ package ru.myapp.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.myapp.aspect.AfterReturningAnnotation;
 import ru.myapp.dto.UserRequestDto;
 import ru.myapp.dto.UserResponseDto;
 import ru.myapp.dto.UserResponseDtoShort;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
+    @AfterReturningAnnotation
     public List<UserResponseDtoShort> getAllEntities() {
         return userMapper.userListToUserResponseDtoShortList(userRepository.findAll());
     }
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getEntityById(Integer userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         return userMapper.userToUserResponseDto(user);
     }
 
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto updateEntity(Integer userId, UserRequestDto userRequestDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         user.setFirstName(userRequestDto.firstName());
         user.setLastName(userRequestDto.lastName());
         userRepository.save(user);
@@ -68,17 +70,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteEntityById(Integer userId) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         userRepository.deleteById(userId);
     }
 
     @Override
     public UserResponseDto addUserToGroup(Integer userId, Integer groupId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         Set<Group> groups = user.getGroups();
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(String.format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         groups.add(group);
         userRepository.save(user);
         return userMapper.userToUserResponseDto(user);
@@ -87,12 +89,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto deleteUserFromGroup(Integer userId, Integer groupId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("User id=%s not found", userId)));
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         Set<Group> groups = user.getGroups();
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(String.format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         if (!groups.contains(group)) {
-            throw new BadRequestException((String.format("User id=%s is not in the group id=%s", userId, groupId)));
+            throw new BadRequestException(("User id=%s is not in the group id=%s".formatted(userId, groupId)));
         }
         groups.remove(group);
         userRepository.save(user);

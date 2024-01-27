@@ -11,8 +11,6 @@ import ru.myapp.repository.GroupRepository;
 
 import java.util.List;
 
-import static java.lang.String.format;
-
 @Service
 @Transactional
 public class GroupServiceImpl implements GroupService {
@@ -35,7 +33,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponseDto getEntityById(Integer groupId) {
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         return groupMapper.groupToGroupResponseDto(group);
     }
 
@@ -51,7 +49,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponseDto updateEntity(Integer groupId, GroupRequestDto groupRequestDto) {
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         group.setName(groupRequestDto.name());
         group.setDescription(groupRequestDto.description());
         groupRepository.save(group);
@@ -61,7 +59,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void deleteEntityById(Integer groupId) {
         groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         groupRepository.deleteById(groupId);
     }
 
@@ -84,7 +82,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public PaidGroupResponseDto updatePaidGroup(Integer paidGroupId, PaidGroupRequestDto paidGroupRequestDto) {
         PaidGroup paidGroup = groupRepository.findPaidGroupById(paidGroupId)
-                .orElseThrow(() -> new NotFoundException(format("PaidGroup id=%s not found", paidGroupId)));
+                .orElseThrow(() -> new NotFoundException("PaidGroup id=%s not found".formatted(paidGroupId)));
         paidGroup.setName(paidGroupRequestDto.name());
         paidGroup.setDescription(paidGroupRequestDto.description());
         paidGroup.setCost(paidGroupRequestDto.cost());
@@ -96,7 +94,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public PaidGroupResponseDto getPaidGroupById(Integer paidGroupId) {
         PaidGroup paidGroup = groupRepository.findPaidGroupById(paidGroupId)
-                .orElseThrow(() -> new NotFoundException(format("PaidGroup id=%s not found", paidGroupId)));
+                .orElseThrow(() -> new NotFoundException("PaidGroup id=%s not found".formatted(paidGroupId)));
         return groupMapper.paidGroupToPaidGroupResponseDto(paidGroup);
     }
 }
