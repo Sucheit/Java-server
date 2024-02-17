@@ -10,8 +10,22 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.myapp.dto.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import ru.myapp.dto.GroupRequestDto;
+import ru.myapp.dto.GroupResponseDto;
+import ru.myapp.dto.GroupResponseDtoShort;
+import ru.myapp.dto.PaidGroupRequestDto;
+import ru.myapp.dto.PaidGroupResponseDto;
+import ru.myapp.dto.PaidGroupResponseDtoShort;
 import ru.myapp.error.ApiError;
 import ru.myapp.service.GroupService;
 
@@ -57,8 +71,7 @@ public class GroupController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = GroupResponseDto.class))}),
             @ApiResponse(responseCode = "404", description = "User not request",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @GetMapping("/{groupId}")
     public GroupResponseDto getGroupById(@PathVariable Integer groupId) {
         return groupService.getEntityById(groupId);
@@ -69,9 +82,8 @@ public class GroupController {
             @ApiResponse(responseCode = "200", description = "Found group by Id",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = PaidGroupResponseDto.class))}),
-            @ApiResponse(responseCode = "404", description = "User not request",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+            @ApiResponse(responseCode = "404", description = "Paid group not founrd",
+                    content = @Content(schema = @Schema(hidden = true)))})
     @GetMapping("/paid/{paidGroupId}")
     public PaidGroupResponseDto getPaidGroupById(@PathVariable Integer paidGroupId) {
         return groupService.getPaidGroupById(paidGroupId);
@@ -97,8 +109,7 @@ public class GroupController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = PaidGroupResponseDto.class))}),
             @ApiResponse(responseCode = "400", description = "PaidGroupRequestDto not valid",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/paid")
     @ResponseStatus(HttpStatus.CREATED)
     public PaidGroupResponseDto createPaidGroup(@RequestBody @Valid PaidGroupRequestDto paidGroupRequestDto) {
@@ -112,11 +123,9 @@ public class GroupController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = GroupResponseDto.class))}),
             @ApiResponse(responseCode = "400", description = "GroupRequestDto not valid",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class))),
+                    content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "404", description = "Group not found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PutMapping("/{groupId}")
     public GroupResponseDto updateGroup(@PathVariable Integer groupId,
                                         @RequestBody @Valid GroupRequestDto groupRequestDto) {
@@ -129,11 +138,9 @@ public class GroupController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = PaidGroupResponseDto.class))}),
             @ApiResponse(responseCode = "400", description = "PaidGroupRequestDto not valid",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class))),
+                    content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "404", description = "Group not found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PutMapping("/paid/{paidGroupId}")
     public PaidGroupResponseDto updatePaidGroup(@PathVariable Integer paidGroupId,
                                                 @RequestBody @Valid PaidGroupRequestDto paidGroupRequestDto) {
@@ -144,8 +151,7 @@ public class GroupController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Delete group by Id"),
             @ApiResponse(responseCode = "404", description = "Group not request",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> deleteGroupById(@PathVariable Integer groupId) {
         groupService.deleteEntityById(groupId);

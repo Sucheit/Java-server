@@ -10,7 +10,16 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import ru.myapp.dto.UserRequestDto;
 import ru.myapp.dto.UserResponseDto;
 import ru.myapp.dto.UserResponseDtoShort;
@@ -47,8 +56,7 @@ public class UserController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDto.class))}),
             @ApiResponse(responseCode = "404", description = "User not request",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @GetMapping("/{userId}")
     public UserResponseDto getUserById(@PathVariable Integer userId) {
         return userService.getEntityById(userId);
@@ -60,8 +68,7 @@ public class UserController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDto.class))}),
             @ApiResponse(responseCode = "400", description = "UserRequestDto not valid",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
@@ -74,11 +81,9 @@ public class UserController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDto.class))}),
             @ApiResponse(responseCode = "400", description = "UserRequestDto not valid",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class))),
+                    content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "404", description = "User not found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PutMapping("/{userId}")
     public UserResponseDto updateUser(@RequestBody @Valid UserRequestDto userRequestDto,
                                       @PathVariable Integer userId) {
@@ -103,8 +108,7 @@ public class UserController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "User or group not found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/{userId}/groups/{groupId}")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto addUserToGroup(@PathVariable Integer userId,
@@ -118,8 +122,7 @@ public class UserController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "User or group not found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class)))})
+                    content = @Content(schema = @Schema(hidden = true)))})
     @DeleteMapping("/{userId}/groups/{groupId}")
     public UserResponseDto deleteUserToGroup(@PathVariable Integer userId,
                                              @PathVariable Integer groupId) {

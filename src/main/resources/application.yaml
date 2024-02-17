@@ -1,8 +1,11 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    #    url: ${SPRING_DATASOURCE_URL}
+    #    username: ${SPRING_DATASOURCE_USERNAME}
+    #    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/aston
+    username: user
+    password: password
   jpa:
     properties:
       hibernate:
@@ -25,4 +28,3 @@ logging:
     ru.myapp: info
     root: warn
     org.springframework.web: debug
-

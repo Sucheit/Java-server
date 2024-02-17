@@ -1,7 +1,10 @@
 package ru.myapp.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Set;
 
+@Schema(name = "Paid group model response")
 public record PaidGroupResponseDto(Integer id,
                                    String name,
                                    String description,

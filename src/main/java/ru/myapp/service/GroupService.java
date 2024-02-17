@@ -1,6 +1,12 @@
 package ru.myapp.service;
 
-import ru.myapp.dto.*;
+import ru.myapp.dto.GroupRequestDto;
+import ru.myapp.dto.GroupResponseDto;
+import ru.myapp.dto.GroupResponseDtoShort;
+import ru.myapp.dto.PaidGroupRequestDto;
+import ru.myapp.dto.PaidGroupResponseDto;
+import ru.myapp.dto.PaidGroupResponseDtoShort;
+import ru.myapp.dto.Response;
 
 import java.util.List;
 
@@ -23,4 +29,6 @@ public interface GroupService extends CrudService<Integer, GroupRequestDto, Grou
     PaidGroupResponseDto updatePaidGroup(Integer paidGroupId, PaidGroupRequestDto paidGroupRequestDto);
 
     PaidGroupResponseDto getPaidGroupById(Integer paidGroupId);
+
+    Response getResponse();
 }
