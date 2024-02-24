@@ -13,9 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ru.myapp.dto.UserRequestDto;
-import ru.myapp.dto.UserResponseDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.request.UserRequestDto;
+import ru.myapp.dto.response.UserResponseDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

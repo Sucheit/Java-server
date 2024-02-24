@@ -3,10 +3,14 @@ package ru.myapp.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.myapp.dto.UserRequestDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.request.UserRequestDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.model.User;
 import ru.myapp.repository.UserRepository;
@@ -15,7 +19,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {

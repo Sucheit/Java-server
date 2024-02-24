@@ -16,6 +16,35 @@ spring:
   sql:
     init:
       mode: always
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json:
+          add.type.header: false
+          type.mapping: ${kafka.mapping.user-response-dto}, ${kafka.mapping.item}
+    consumer:
+      group-id:
+        users-group-id: users-group-id
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json:
+          trusted.packages: ru.myapp.dto.*, ru.myapp.model.*
+          value.type.strategy: type
+          add.type.header: false
+          type.mapping: ${kafka.mapping.user-response-dto}, ${kafka.mapping.item}
+
+kafka:
+  topics:
+    users-topic: users-topic
+    items-topic: items-topic
+  mapping:
+    user-response-dto: UserResponseDtoShort:ru.myapp.dto.response.UserResponseDtoShort
+    item: Item:ru.myapp.model.Item
 
 springdoc:
   api-docs:

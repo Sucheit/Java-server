@@ -3,10 +3,9 @@ package ru.myapp.error;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,8 +13,7 @@ import java.util.Objects;
 import static ru.myapp.utils.Constants.DATE_TIME_FORMATTER;
 
 
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ErrorHandler {
 

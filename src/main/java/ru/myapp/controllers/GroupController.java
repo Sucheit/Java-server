@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.myapp.dto.GroupRequestDto;
-import ru.myapp.dto.GroupResponseDto;
-import ru.myapp.dto.GroupResponseDtoShort;
-import ru.myapp.dto.PaidGroupRequestDto;
-import ru.myapp.dto.PaidGroupResponseDto;
-import ru.myapp.dto.PaidGroupResponseDtoShort;
+import ru.myapp.dto.request.GroupRequestDto;
+import ru.myapp.dto.request.PaidGroupRequestDto;
+import ru.myapp.dto.response.GroupResponseDto;
+import ru.myapp.dto.response.GroupResponseDtoShort;
+import ru.myapp.dto.response.PaidGroupResponseDto;
+import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 import ru.myapp.error.ApiError;
 import ru.myapp.service.GroupService;
 

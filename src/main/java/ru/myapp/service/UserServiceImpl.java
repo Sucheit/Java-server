@@ -1,13 +1,15 @@
 package ru.myapp.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.aspect.AfterReturningAnnotation;
-import ru.myapp.dto.UserRequestDto;
-import ru.myapp.dto.UserResponseDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.request.UserRequestDto;
+import ru.myapp.dto.response.UserResponseDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
+import ru.myapp.kafka.publish.MessagePublisher;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.model.Group;
 import ru.myapp.model.User;
@@ -19,6 +21,7 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -27,11 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final GroupRepository groupRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, GroupRepository groupRepository) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.groupRepository = groupRepository;
-    }
+    private final MessagePublisher<UserResponseDtoShort> userResponsePublisher;
 
     @Transactional(readOnly = true)
     @Override
@@ -54,6 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userRequestDto.firstName());
         user.setLastName(userRequestDto.lastName());
         user = userRepository.save(user);
+        userResponsePublisher.publish(userMapper.userToUserResponseDtoShort(user));
         return userMapper.userToUserResponseDto(user);
     }
 

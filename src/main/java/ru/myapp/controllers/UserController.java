@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.myapp.dto.UserRequestDto;
-import ru.myapp.dto.UserResponseDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.request.UserRequestDto;
+import ru.myapp.dto.response.UserResponseDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.ApiError;
 import ru.myapp.service.UserService;
 

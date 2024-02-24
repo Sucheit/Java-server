@@ -1,8 +1,8 @@
 package ru.myapp.service;
 
-import ru.myapp.dto.UserRequestDto;
-import ru.myapp.dto.UserResponseDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.request.UserRequestDto;
+import ru.myapp.dto.response.UserResponseDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 
 import java.util.List;
 

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
-import ru.myapp.dto.Response;
 import ru.myapp.model.Group;
 import ru.myapp.model.PaidGroup;
 
@@ -25,11 +24,4 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     @Query("select pg from PaidGroup pg where pg.id = ?1")
     Optional<PaidGroup> findPaidGroupById(@NonNull Integer paidGroupId);
-
-    @Query("""
-             SELECT u.firstName, gr.description FROM Group gr
-             join User u on true
-             where u.id=:userId and gr.id=:groupId
-            """)
-    Optional<Response> getResponse(Integer userId, Integer groupId);
 }

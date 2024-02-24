@@ -2,13 +2,12 @@ package ru.myapp.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.myapp.dto.GroupRequestDto;
-import ru.myapp.dto.GroupResponseDto;
-import ru.myapp.dto.GroupResponseDtoShort;
-import ru.myapp.dto.PaidGroupRequestDto;
-import ru.myapp.dto.PaidGroupResponseDto;
-import ru.myapp.dto.PaidGroupResponseDtoShort;
-import ru.myapp.dto.Response;
+import ru.myapp.dto.request.GroupRequestDto;
+import ru.myapp.dto.request.PaidGroupRequestDto;
+import ru.myapp.dto.response.GroupResponseDto;
+import ru.myapp.dto.response.GroupResponseDtoShort;
+import ru.myapp.dto.response.PaidGroupResponseDto;
+import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 import ru.myapp.error.NotFoundException;
 import ru.myapp.mappers.GroupMapper;
 import ru.myapp.model.Group;
@@ -101,11 +100,5 @@ public class GroupServiceImpl implements GroupService {
         PaidGroup paidGroup = groupRepository.findPaidGroupById(paidGroupId)
                 .orElseThrow(() -> new NotFoundException("PaidGroup id=%s not found".formatted(paidGroupId)));
         return groupMapper.paidGroupToPaidGroupResponseDto(paidGroup);
-    }
-
-    @Override
-    public Response getResponse() {
-        return groupRepository.getResponse(2, 1)
-                .orElseThrow(() -> new NotFoundException("RESPONSE NOT FOUND"));
     }
 }

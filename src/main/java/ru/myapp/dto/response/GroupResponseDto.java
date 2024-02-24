@@ -1,4 +1,4 @@
-package ru.myapp.dto;
+package ru.myapp.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
