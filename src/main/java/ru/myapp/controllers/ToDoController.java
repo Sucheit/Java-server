@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.myapp.dto.request.ToDo;
+import ru.myapp.dto.response.ToDo;
 import ru.myapp.feign.TodosFeignClient;
 
 import java.util.List;

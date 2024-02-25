@@ -1,4 +1,4 @@
-package ru.myapp.dto.request;
+package ru.myapp.dto.response;
 
 public record ToDo(
 

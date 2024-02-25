@@ -111,6 +111,12 @@
             <version>4.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>ru.arthur.inzhilov</groupId>
+            <artifactId>jps-spring-boot-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
