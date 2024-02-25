@@ -57,3 +57,8 @@ logging:
     ru.myapp: info
     root: warn
     org.springframework.web: debug
+
+feign:
+  client:
+    name: todos-client
+    url: https://jsonplaceholder.typicode.com

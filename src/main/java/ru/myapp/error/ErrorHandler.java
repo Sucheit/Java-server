@@ -2,6 +2,7 @@ package ru.myapp.error;
 
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -54,5 +55,16 @@ public class ErrorHandler {
                         e.getFieldError().getRejectedValue()),
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now().format(DATE_TIME_FORMATTER));
+    }
+
+    @ExceptionHandler(FeignRequestException.class)
+    public ResponseEntity<ApiError> handleFeignRequestException(final FeignRequestException e) {
+        return ResponseEntity
+                .status(e.getStatus())
+                .body(new ApiError(
+                        "Feign request error",
+                        e.getStatus().toString(),
+                        e.getMessage(),
+                        LocalDateTime.now().format(DATE_TIME_FORMATTER)));
     }
 }
