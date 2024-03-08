@@ -2,7 +2,12 @@ package ru.myapp.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.myapp.dto.*;
+import ru.myapp.dto.request.GroupRequestDto;
+import ru.myapp.dto.request.PaidGroupRequestDto;
+import ru.myapp.dto.response.GroupResponseDto;
+import ru.myapp.dto.response.GroupResponseDtoShort;
+import ru.myapp.dto.response.PaidGroupResponseDto;
+import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 import ru.myapp.error.NotFoundException;
 import ru.myapp.mappers.GroupMapper;
 import ru.myapp.model.Group;
@@ -11,12 +16,9 @@ import ru.myapp.repository.GroupRepository;
 
 import java.util.List;
 
-import static java.lang.String.format;
-
 @Service
 @Transactional
 public class GroupServiceImpl implements GroupService {
-
     private final GroupRepository groupRepository;
 
     private final GroupMapper groupMapper;
@@ -35,7 +37,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponseDto getEntityById(Integer groupId) {
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         return groupMapper.groupToGroupResponseDto(group);
     }
 
@@ -51,7 +53,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponseDto updateEntity(Integer groupId, GroupRequestDto groupRequestDto) {
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         group.setName(groupRequestDto.name());
         group.setDescription(groupRequestDto.description());
         groupRepository.save(group);
@@ -61,7 +63,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void deleteEntityById(Integer groupId) {
         groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(format("Group id=%s not found", groupId)));
+                .orElseThrow(() -> new NotFoundException("Group id=%s not found".formatted(groupId)));
         groupRepository.deleteById(groupId);
     }
 
@@ -84,7 +86,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public PaidGroupResponseDto updatePaidGroup(Integer paidGroupId, PaidGroupRequestDto paidGroupRequestDto) {
         PaidGroup paidGroup = groupRepository.findPaidGroupById(paidGroupId)
-                .orElseThrow(() -> new NotFoundException(format("PaidGroup id=%s not found", paidGroupId)));
+                .orElseThrow(() -> new NotFoundException("PaidGroup id=%s not found".formatted(paidGroupId)));
         paidGroup.setName(paidGroupRequestDto.name());
         paidGroup.setDescription(paidGroupRequestDto.description());
         paidGroup.setCost(paidGroupRequestDto.cost());
@@ -96,7 +98,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public PaidGroupResponseDto getPaidGroupById(Integer paidGroupId) {
         PaidGroup paidGroup = groupRepository.findPaidGroupById(paidGroupId)
-                .orElseThrow(() -> new NotFoundException(format("PaidGroup id=%s not found", paidGroupId)));
+                .orElseThrow(() -> new NotFoundException("PaidGroup id=%s not found".formatted(paidGroupId)));
         return groupMapper.paidGroupToPaidGroupResponseDto(paidGroup);
     }
 }

@@ -7,9 +7,9 @@ values (2, 99);
 
 
 insert into users (first_name, last_name)
-values ('emma', 'hill');
+values ('Steve', 'Rogers');
 insert into users (first_name, last_name)
-values ('tom', 'anderson');
+values ('Natasha', 'Romanoff');
 
 
 insert into user_groups (user_id, group_id)

@@ -1,10 +1,10 @@
 package ru.myapp.mappers;
 
 import org.mapstruct.Mapper;
-import ru.myapp.dto.GroupResponseDto;
-import ru.myapp.dto.GroupResponseDtoShort;
-import ru.myapp.dto.PaidGroupResponseDto;
-import ru.myapp.dto.PaidGroupResponseDtoShort;
+import ru.myapp.dto.response.GroupResponseDto;
+import ru.myapp.dto.response.GroupResponseDtoShort;
+import ru.myapp.dto.response.PaidGroupResponseDto;
+import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 import ru.myapp.model.Group;
 import ru.myapp.model.PaidGroup;
 

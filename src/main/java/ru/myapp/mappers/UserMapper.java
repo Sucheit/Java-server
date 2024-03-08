@@ -1,8 +1,8 @@
 package ru.myapp.mappers;
 
 import org.mapstruct.Mapper;
-import ru.myapp.dto.UserResponseDto;
-import ru.myapp.dto.UserResponseDtoShort;
+import ru.myapp.dto.response.UserResponseDto;
+import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.model.User;
 
 import java.util.List;

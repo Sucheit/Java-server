@@ -1,6 +1,11 @@
 package ru.myapp.service;
 
-import ru.myapp.dto.*;
+import ru.myapp.dto.request.GroupRequestDto;
+import ru.myapp.dto.request.PaidGroupRequestDto;
+import ru.myapp.dto.response.GroupResponseDto;
+import ru.myapp.dto.response.GroupResponseDtoShort;
+import ru.myapp.dto.response.PaidGroupResponseDto;
+import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 
 import java.util.List;
 

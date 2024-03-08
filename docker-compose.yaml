@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  myapp:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: myapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/aston
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+
+  database:
+    container_name: database
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: aston
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
