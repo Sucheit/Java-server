@@ -13,6 +13,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +24,11 @@ import java.util.Set;
 
 @Cacheable
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "groups")
+@ToString(callSuper = true)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Group extends AbstractEntity {
 
@@ -39,37 +47,6 @@ public class Group extends AbstractEntity {
     @JoinTable(name = "user_groups",
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
     protected Set<User> users = new HashSet<>();
-
-    public Group() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

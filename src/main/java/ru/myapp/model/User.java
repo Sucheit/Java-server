@@ -8,9 +8,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +24,11 @@ import java.util.Set;
 @Cacheable
 @Entity
 @Table(name = "users")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(callSuper = true)
 public class User extends AbstractEntity {
 
     @NotBlank
@@ -35,10 +46,12 @@ public class User extends AbstractEntity {
     @JoinTable(name = "user_groups",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @ToString.Exclude
     private Set<Group> groups = new HashSet<>();
 
-    public User() {
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @ToString.Exclude
+    private Passport passport;
 
     public User(Integer id, String firstName, String lastName) {
         this.id = id;
@@ -49,34 +62,5 @@ public class User extends AbstractEntity {
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
     }
 }
