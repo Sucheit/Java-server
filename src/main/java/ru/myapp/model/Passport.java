@@ -11,19 +11,22 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Cacheable
-@Table(name = "passports")
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Table(name = "passports")
 public class Passport {
 
     @Id

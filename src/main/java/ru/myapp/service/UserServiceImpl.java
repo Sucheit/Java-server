@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @AfterReturningAnnotation
     public List<UserResponseDtoShort> getAllEntities() {
-        return userMapper.userListToUserResponseDtoShortList(userRepository.findAll());
+        return userMapper.userListToUserResponseDtoShortList(userRepository.getAllUsers());
     }
 
     @Transactional(readOnly = true)
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto addUserToGroup(Integer userId, Integer groupId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.getUserById(userId)
                 .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         Set<Group> groups = user.getGroups();
         Group group = groupRepository.findById(groupId)
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto deleteUserFromGroup(Integer userId, Integer groupId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.getUserById(userId)
                 .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
         Set<Group> groups = user.getGroups();
         Group group = groupRepository.findById(groupId)

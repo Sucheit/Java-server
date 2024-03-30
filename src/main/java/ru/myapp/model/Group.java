@@ -13,20 +13,25 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-@Cacheable
 @Entity
 @Setter
 @Getter
+@Cacheable
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "groups")
 @ToString(callSuper = true)
 @Inheritance(strategy = InheritanceType.JOINED)

@@ -18,7 +18,14 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 
 
     @Query("SELECT pg FROM PaidGroup pg")
+    @EntityGraph(attributePaths = "users")
+    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     List<PaidGroup> findAllPaidGroups();
+
+    @Query("SELECT g FROM Group g")
+    @EntityGraph(attributePaths = "users")
+    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
+    List<Group> findAllGroups();
 
     @EntityGraph(attributePaths = "users")
     @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})

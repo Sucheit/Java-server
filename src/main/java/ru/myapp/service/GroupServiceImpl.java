@@ -31,7 +31,7 @@ public class GroupServiceImpl implements GroupService {
     @Transactional(readOnly = true)
     @Override
     public List<GroupResponseDtoShort> getAllEntities() {
-        return groupMapper.groupListToGroupResponseDtoShortList(groupRepository.findAll());
+        return groupMapper.groupListToGroupResponseDtoShortList(groupRepository.findAllGroups());
     }
 
     @Override

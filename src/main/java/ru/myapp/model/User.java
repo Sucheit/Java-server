@@ -13,21 +13,24 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Cacheable
 @Entity
-@Table(name = "users")
 @Setter
 @Getter
-@AllArgsConstructor
+@Cacheable
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
 @ToString(callSuper = true)
 public class User extends AbstractEntity {
 
@@ -49,7 +52,7 @@ public class User extends AbstractEntity {
     @ToString.Exclude
     private Set<Group> groups = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", optional = false, cascade = CascadeType.ALL)
     @ToString.Exclude
     private Passport passport;
 

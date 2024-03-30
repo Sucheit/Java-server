@@ -1,7 +1,9 @@
 package ru.myapp.repository;
 
+import jakarta.persistence.QueryHint;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 import ru.myapp.model.Passport;
 
@@ -11,8 +13,10 @@ import java.util.Optional;
 public interface PassportRepository extends JpaRepository<Passport, Integer> {
 
     @EntityGraph(attributePaths = "user")
+    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     Optional<Passport> getPassportsByUserId(Integer userId);
 
     @EntityGraph(attributePaths = "user")
+    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     Optional<Passport> getPassportsById(Integer passportId);
 }

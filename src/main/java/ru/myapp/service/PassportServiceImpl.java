@@ -3,11 +3,15 @@ package ru.myapp.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.myapp.dto.request.PassportRequestDto;
 import ru.myapp.dto.response.PassportResponseDto;
+import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
 import ru.myapp.mappers.PassportMapper;
 import ru.myapp.model.Passport;
+import ru.myapp.model.User;
 import ru.myapp.repository.PassportRepository;
+import ru.myapp.repository.UserRepository;
 
 @Service
 @Slf4j
@@ -17,6 +21,8 @@ public class PassportServiceImpl implements PassportService {
     private final PassportRepository passportRepository;
 
     private final PassportMapper passportMapper;
+
+    private final UserRepository userRepository;
 
     @Override
     public PassportResponseDto getPasswordByUserId(Integer userId) {
@@ -31,6 +37,20 @@ public class PassportServiceImpl implements PassportService {
         Passport passport = passportRepository.getPassportsById(passportId)
                 .orElseThrow(() -> new NotFoundException("Passport id=%s not found.".formatted(passportId)));
         log.info("got passport: {}", passport);
+        return passportMapper.mapToPassportResponseDto(passport);
+    }
+
+    @Override
+    public PassportResponseDto createPassport(Integer userId, PassportRequestDto passportRequestDto) {
+        if (passportRepository.existsById(userId)) {
+            throw new BadRequestException("Passport id=%s already exists".formatted(userId));
+        }
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User id=%s not found".formatted(userId)));
+        Passport passport = new Passport();
+        passport.setUser(user);
+        passport.setSerialNumber(passportRequestDto.serialNumber());
+        passport = passportRepository.save(passport);
         return passportMapper.mapToPassportResponseDto(passport);
     }
 }

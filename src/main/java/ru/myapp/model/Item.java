@@ -5,20 +5,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
 
 @Entity
-@Table(name = "items")
 @Setter
 @Getter
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
+@Table(name = "items")
 public class Item extends AbstractEntity implements Serializable {
 
     @Size(min = 3, max = 255)
