@@ -1,7 +1,6 @@
 package ru.myapp.mappers;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import ru.myapp.dto.response.PassportResponseDto;
 import ru.myapp.model.Passport;
 
