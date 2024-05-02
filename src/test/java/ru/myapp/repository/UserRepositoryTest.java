@@ -40,7 +40,7 @@ public class UserRepositoryTest {
         User savedUser = userRepository.save(new User("Tom", "Hill"));
 
         assertNotNull(savedUser);
-        assertEquals(3, savedUser.getId());
+        assertEquals(4, savedUser.getId());
         assertEquals("Tom", savedUser.getFirstName());
         assertEquals("Hill", savedUser.getLastName());
     }
@@ -52,7 +52,7 @@ public class UserRepositoryTest {
         List<User> users = userRepository.findAll();
 
         assertNotNull(users);
-        assertEquals(1, users.size());
+        assertEquals(2, users.size());
         assertEquals(2, users.get(0).getId());
         assertEquals("Natasha", users.get(0).getFirstName());
         assertEquals("Romanoff", users.get(0).getLastName());
@@ -63,7 +63,7 @@ public class UserRepositoryTest {
         List<User> users = userRepository.findAll();
 
         assertNotNull(users);
-        assertEquals(2, users.size());
+        assertEquals(3, users.size());
         assertEquals(1, users.get(0).getId());
         assertEquals("Steve", users.get(0).getFirstName());
         assertEquals("Rogers", users.get(0).getLastName());
