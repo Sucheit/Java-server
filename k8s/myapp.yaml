@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       component: myapp-label
@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-api-cluster-ip-service
+  name: myapp-cluster-ip-service
 spec:
   type: ClusterIP
   selector:
