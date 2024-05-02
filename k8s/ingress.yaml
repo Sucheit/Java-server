@@ -22,4 +22,4 @@ spec:
                 # UPDATE SERVICE FIELDS
                 name: myapp-api-cluster-ip-service
                 port:
-                  number: 8080
+                  number: 3000
