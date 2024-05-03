@@ -16,12 +16,12 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 32Gi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres-deployment
 spec:
   replicas: 1
   selector:
