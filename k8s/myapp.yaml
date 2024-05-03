@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: myapp-label
@@ -30,6 +30,8 @@ spec:
                   key: postgres_password
             - name: POSTGRES_HOST
               value: postgres-cluster-ip-service
+            - name: KAFKA_HOST
+              value: kafka-service
 ---
 apiVersion: v1
 kind: Service

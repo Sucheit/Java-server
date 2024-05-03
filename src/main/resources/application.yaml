@@ -6,9 +6,9 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST}:5432/postgres
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
-#    url: ${SPRING_DATASOURCE_URL}
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
+  #    url: ${SPRING_DATASOURCE_URL}
+  #    username: ${SPRING_DATASOURCE_USERNAME}
+  #    password: ${SPRING_DATASOURCE_PASSWORD}
   #    url: jdbc:postgresql://postgres-cluster-ip-service:5432/aston
   #    username: user
   #    password: password
@@ -24,8 +24,8 @@ spring:
     init:
       mode: always
   kafka:
-    #    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_HOST}:9092
+    #    bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
