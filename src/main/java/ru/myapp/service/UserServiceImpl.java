@@ -9,12 +9,12 @@ import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
-import ru.myapp.kafka.publish.MessagePublisher;
+import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.UserMapper;
-import ru.myapp.model.Group;
-import ru.myapp.model.User;
-import ru.myapp.repository.GroupRepository;
-import ru.myapp.repository.UserRepository;
+import ru.myapp.persistence.model.Group;
+import ru.myapp.persistence.model.User;
+import ru.myapp.persistence.repository.GroupRepository;
+import ru.myapp.persistence.repository.UserRepository;
 
 import java.util.List;
 import java.util.Set;

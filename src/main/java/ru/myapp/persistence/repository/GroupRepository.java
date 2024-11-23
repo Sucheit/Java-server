@@ -1,4 +1,4 @@
-package ru.myapp.repository;
+package ru.myapp.persistence.repository;
 
 import jakarta.persistence.QueryHint;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
-import ru.myapp.model.Group;
-import ru.myapp.model.PaidGroup;
+import ru.myapp.persistence.model.Group;
+import ru.myapp.persistence.model.PaidGroup;
 
 import java.util.List;
 import java.util.Optional;

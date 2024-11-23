@@ -1,4 +1,4 @@
-package ru.myapp.kafka.listen;
+package ru.myapp.kafka.consumer;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.myapp.model.Item;
+import ru.myapp.persistence.model.Item;
 import ru.myapp.service.ItemService;
 
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package ru.myapp.kafka.listen;
+package ru.myapp.kafka.consumer;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

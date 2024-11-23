@@ -12,7 +12,7 @@ services:
       - zookeeper
       - kafka
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/aston
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/database
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
@@ -23,7 +23,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: aston
+      POSTGRES_DB: database
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
 

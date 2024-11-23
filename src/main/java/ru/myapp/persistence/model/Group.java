@@ -1,4 +1,4 @@
-package ru.myapp.model;
+package ru.myapp.persistence.model;
 
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;

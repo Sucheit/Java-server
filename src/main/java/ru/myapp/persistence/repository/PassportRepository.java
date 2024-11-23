@@ -1,11 +1,11 @@
-package ru.myapp.repository;
+package ru.myapp.persistence.repository;
 
 import jakarta.persistence.QueryHint;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
-import ru.myapp.model.Passport;
+import ru.myapp.persistence.model.Passport;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package ru.myapp.kafka.publish;
+package ru.myapp.kafka.publisher;
 
 public interface MessagePublisher<T> {
 

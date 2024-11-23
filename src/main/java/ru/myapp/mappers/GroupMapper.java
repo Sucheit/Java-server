@@ -5,8 +5,8 @@ import ru.myapp.dto.response.GroupResponseDto;
 import ru.myapp.dto.response.GroupResponseDtoShort;
 import ru.myapp.dto.response.PaidGroupResponseDto;
 import ru.myapp.dto.response.PaidGroupResponseDtoShort;
-import ru.myapp.model.Group;
-import ru.myapp.model.PaidGroup;
+import ru.myapp.persistence.model.Group;
+import ru.myapp.persistence.model.PaidGroup;
 
 import java.util.List;
 

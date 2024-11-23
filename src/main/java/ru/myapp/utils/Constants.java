@@ -1,12 +1,11 @@
 package ru.myapp.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.format.DateTimeFormatter;
 
+@UtilityClass
 public class Constants {
-
-    private Constants() {
-        throw new RuntimeException();
-    }
 
     public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 

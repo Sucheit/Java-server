@@ -10,9 +10,9 @@ import ru.myapp.dto.response.PaidGroupResponseDto;
 import ru.myapp.dto.response.PaidGroupResponseDtoShort;
 import ru.myapp.error.NotFoundException;
 import ru.myapp.mappers.GroupMapper;
-import ru.myapp.model.Group;
-import ru.myapp.model.PaidGroup;
-import ru.myapp.repository.GroupRepository;
+import ru.myapp.persistence.model.Group;
+import ru.myapp.persistence.model.PaidGroup;
+import ru.myapp.persistence.repository.GroupRepository;
 
 import java.util.List;
 

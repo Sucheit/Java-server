@@ -1,4 +1,4 @@
-package ru.myapp.model;
+package ru.myapp.persistence.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

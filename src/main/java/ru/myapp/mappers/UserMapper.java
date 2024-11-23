@@ -3,7 +3,7 @@ package ru.myapp.mappers;
 import org.mapstruct.Mapper;
 import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
-import ru.myapp.model.User;
+import ru.myapp.persistence.model.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.myapp.kafka.listen;
+package ru.myapp.kafka.consumer;
 
 public interface MessageListener<T> {
 

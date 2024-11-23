@@ -9,7 +9,8 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ru.myapp.model.User;
+import ru.myapp.persistence.model.User;
+import ru.myapp.persistence.repository.UserRepository;
 
 import java.util.List;
 

@@ -8,10 +8,10 @@ import ru.myapp.dto.response.PassportResponseDto;
 import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
 import ru.myapp.mappers.PassportMapper;
-import ru.myapp.model.Passport;
-import ru.myapp.model.User;
-import ru.myapp.repository.PassportRepository;
-import ru.myapp.repository.UserRepository;
+import ru.myapp.persistence.model.Passport;
+import ru.myapp.persistence.model.User;
+import ru.myapp.persistence.repository.PassportRepository;
+import ru.myapp.persistence.repository.UserRepository;
 
 @Service
 @Slf4j

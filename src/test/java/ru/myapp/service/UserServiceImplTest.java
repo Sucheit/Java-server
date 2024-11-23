@@ -12,8 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.mappers.UserMapper;
-import ru.myapp.model.User;
-import ru.myapp.repository.UserRepository;
+import ru.myapp.persistence.model.User;
+import ru.myapp.persistence.repository.UserRepository;
 
 import java.util.List;
 

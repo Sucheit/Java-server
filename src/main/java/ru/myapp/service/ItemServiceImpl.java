@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.dto.request.ItemRequestDto;
 import ru.myapp.dto.response.ItemResponseDto;
 import ru.myapp.error.NotFoundException;
-import ru.myapp.kafka.publish.MessagePublisher;
+import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.ItemMapper;
-import ru.myapp.model.Item;
-import ru.myapp.repository.ItemRepository;
+import ru.myapp.persistence.model.Item;
+import ru.myapp.persistence.repository.ItemRepository;
 
 @Slf4j
 @Service

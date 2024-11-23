@@ -2,7 +2,7 @@ package ru.myapp.service;
 
 import ru.myapp.dto.request.ItemRequestDto;
 import ru.myapp.dto.response.ItemResponseDto;
-import ru.myapp.model.Item;
+import ru.myapp.persistence.model.Item;
 
 public interface ItemService {
 

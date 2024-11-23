@@ -1,4 +1,4 @@
-package ru.myapp.kafka.publish;
+package ru.myapp.kafka.publisher;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

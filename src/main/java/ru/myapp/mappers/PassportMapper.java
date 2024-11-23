@@ -2,7 +2,7 @@ package ru.myapp.mappers;
 
 import org.mapstruct.Mapper;
 import ru.myapp.dto.response.PassportResponseDto;
-import ru.myapp.model.Passport;
+import ru.myapp.persistence.model.Passport;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
