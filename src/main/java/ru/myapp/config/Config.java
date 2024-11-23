@@ -5,12 +5,18 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 public class Config {
 
     @Bean
-    public Executor executor() {
+    public Executor taskExecutor() {
         return Executors.newVirtualThreadPerTaskExecutor();
+    }
+
+    @Bean
+    public ScheduledExecutorService scheduledExecutorService() {
+        return Executors.newSingleThreadScheduledExecutor();
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.aspect.AfterReturningAnnotation;
+import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
@@ -25,12 +26,10 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
     private final UserMapper userMapper;
-
     private final GroupRepository groupRepository;
-
-    private final MessagePublisher<UserResponseDtoShort> userResponsePublisher;
+    private final MessagePublisher messagePublisher;
+    private final KafkaProps kafkaProperties;
 
     @Transactional(readOnly = true)
     @Override
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userRequestDto.firstName());
         user.setLastName(userRequestDto.lastName());
         user = userRepository.save(user);
-        userResponsePublisher.publish(userMapper.userToUserResponseDtoShort(user));
+        messagePublisher.publish(kafkaProperties.getTopics().getUsers(), userMapper.userToUserResponseDtoShort(user));
         return userMapper.userToUserResponseDto(user);
     }
 

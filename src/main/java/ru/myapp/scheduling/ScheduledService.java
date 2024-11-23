@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class SchedulerService {
+public class ScheduledService {
 
-    @Async
-    @Scheduled(fixedRate = 5000)
+    @Async("taskExecutor")
+    @Scheduled(fixedRate = 15000)
     public void scheduled() {
         log.info("Scheduled task: {}", Thread.currentThread().getName());
     }

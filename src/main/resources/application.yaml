@@ -2,57 +2,50 @@ server:
   port: 8080
 
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:5432/postgres
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-  #    url: ${SPRING_DATASOURCE_URL}
-  #    username: ${SPRING_DATASOURCE_USERNAME}
-  #    password: ${SPRING_DATASOURCE_PASSWORD}
-  #    url: jdbc:postgresql://postgres-cluster-ip-service:5432/aston
-  #    username: user
-  #    password: password
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     properties:
       hibernate:
         ddl-auto: none
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
     show-sql: true
   sql:
     init:
       mode: always
-  kafka:
-    bootstrap-servers: ${KAFKA_HOST}:9092
-    #    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        spring.json:
-          add.type.header: false
-          type.mapping: ${kafka.mapping.user-response-dto}, ${kafka.mapping.item}
-    consumer:
-      group-id:
-        users-group-id: users-group-id
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      auto-offset-reset: latest
-      properties:
-        spring.json:
-          trusted.packages: ru.myapp.dto.*, ru.myapp.model.*
-          value.type.strategy: type
-          add.type.header: false
-          type.mapping: ${kafka.mapping.user-response-dto}, ${kafka.mapping.item}
+  application:
+    name: myapp
 
 kafka:
   topics:
-    users-topic: users-topic
-    items-topic: items-topic
-  mapping:
-    user-response-dto: UserResponseDtoShort:ru.myapp.dto.response.UserResponseDtoShort
-    item: Item:ru.myapp.model.Item
+    users: users
+    items: items
+  back-off:
+    interval: 5000
+    attempts: 3
+  listener:
+    concurrency: 3
+  connection:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    consumer:
+      groupId: consumer-id
+    producer:
+      groupId: producer-id
+    security:
+      protocol: PLAINTEXT
+    ssl:
+      trust-store-location: ""
+      trust-store-type: ""
+      trust-store-password: ""
+      key-store-location: ""
+      key-store-type: ""
+      key-store-password: ""
+      key-password: ""
+
 
 springdoc:
   api-docs:

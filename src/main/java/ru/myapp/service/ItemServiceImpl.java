@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.ItemRequestDto;
 import ru.myapp.dto.response.ItemResponseDto;
 import ru.myapp.error.NotFoundException;
@@ -18,16 +19,15 @@ import ru.myapp.persistence.repository.ItemRepository;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
-
     private final ItemMapper itemMapper;
-
-    private final MessagePublisher<Item> itemMessagePublisher;
+    private final MessagePublisher messagePublisher;
+    private final KafkaProps kafkaProperties;
 
     @Override
     public void sendToKafka(ItemRequestDto itemRequestDto) {
         Item item = itemMapper.toItem(itemRequestDto);
         log.info("Sent to kafka: {}", item);
-        itemMessagePublisher.publish(item);
+        messagePublisher.publish(kafkaProperties.getTopics().getItems(), item);
     }
 
     @Override
