@@ -68,7 +68,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: env,health,info,caches,beans,activity,scheduledtasks,conditions,env,shutdown,threaddump,metrics,loggers,heapdump,refresh
+        include: prometheus,env,health,info,caches,beans,activity,scheduledtasks,conditions,env,shutdown,threaddump,metrics,loggers,heapdump,refresh
 
 activity:
   enabled: ${ACTIVITY_ENABLED:true}
