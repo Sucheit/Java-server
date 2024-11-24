@@ -1,13 +1,15 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
+  application:
+    name: myapp
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5430/postgres_db
+    username: postgres_user
+    password: postgres_password
   jpa:
     properties:
       hibernate:
@@ -17,8 +19,6 @@ spring:
   sql:
     init:
       mode: always
-  application:
-    name: myapp
 
 kafka:
   topics:
@@ -30,11 +30,12 @@ kafka:
   listener:
     concurrency: 3
   connection:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    bootstrap-servers: localhost:29092
     consumer:
       groupId: consumer-id
+      clientId: consumer-client-di
     producer:
-      groupId: producer-id
+      clientId: producer-client-id
     security:
       protocol: PLAINTEXT
     ssl:
@@ -45,7 +46,6 @@ kafka:
       key-store-type: ""
       key-store-password: ""
       key-password: ""
-
 
 springdoc:
   api-docs:
@@ -63,3 +63,12 @@ feign:
   client:
     name: todos-client
     url: https://jsonplaceholder.typicode.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env,health,info,caches,beans,activity,scheduledtasks,conditions,env,shutdown,threaddump,metrics,loggers,heapdump,refresh
+
+activity:
+  enabled: ${ACTIVITY_ENABLED:true}

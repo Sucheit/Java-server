@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.myapp.kafka.publisher.MessagePublisher;
 
 import java.nio.charset.StandardCharsets;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class MessagePublisherImpl implements MessagePublisher {
 

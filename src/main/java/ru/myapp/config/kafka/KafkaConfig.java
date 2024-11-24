@@ -33,49 +33,39 @@ public class KafkaConfig {
 
     private final KafkaProps kafkaProps;
 
-//    @Bean
-//    public KafkaAdmin.NewTopics topics() {
-//        return new KafkaAdmin.NewTopics(
-//                TopicBuilder.name(kafkaProps.getTopics().getUsers())
-//                        .build(),
-//                TopicBuilder.name(kafkaProps.getTopics().getItems())
-//                        .build());
-//    }
-
     @Bean
-    public ProducerFactory<String, Object> producerFactory() {
+    public ProducerFactory<String, Object> itemProducerFactory() {
         Map<String, Object> props = kafkaProps.getConnection().buildProducerProperties();
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(ProducerConfig.CLIENT_ID_CONFIG, "producer-id");
         return new DefaultKafkaProducerFactory<>(props);
     }
 
     @Bean
-    public KafkaTemplate<String, Object> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, Object> itemKafkaTemplate() {
+        return new KafkaTemplate<>(itemProducerFactory());
     }
 
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         Map<String, Object> props = kafkaProps.getConnection().buildConsumerProperties();
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, ErrorHandlingDeserializer.class);
-        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, ErrorHandlingDeserializer.class);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+        props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
+        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        var factory = new ConcurrentKafkaListenerContainerFactory<String, Object>();
         factory.setConsumerFactory(consumerFactory());
         factory.setCommonErrorHandler(kafkaDefaultErrorHandler());
         factory.setConcurrency(kafkaProps.getListener().getConcurrency());
         return factory;
     }
-
 
     @Bean
     public DefaultErrorHandler kafkaDefaultErrorHandler() {
