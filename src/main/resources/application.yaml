@@ -1,6 +1,9 @@
 server:
   port: 8090
 
+activity:
+  enabled: false
+
 spring:
   application:
     name: myapp
@@ -70,5 +73,4 @@ management:
       exposure:
         include: prometheus,env,health,info,caches,beans,activity,scheduledtasks,conditions,env,shutdown,threaddump,metrics,loggers,heapdump,refresh
 
-activity:
-  enabled: true
+
