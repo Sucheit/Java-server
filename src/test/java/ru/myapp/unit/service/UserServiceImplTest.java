@@ -1,4 +1,4 @@
-package ru.myapp.service;
+package ru.myapp.unit.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +14,7 @@ import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.persistence.model.User;
 import ru.myapp.persistence.repository.UserRepository;
+import ru.myapp.service.UserServiceImpl;
 
 import java.util.List;
 

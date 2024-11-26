@@ -1,4 +1,4 @@
-package ru.myapp.repository;
+package ru.myapp.unit.repository;
 
 
 import org.junit.jupiter.api.Test;
