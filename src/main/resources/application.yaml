@@ -3,6 +3,7 @@ server:
 
 activity:
   enabled: false
+  kafka-sender: false
 
 spring:
   application:
@@ -59,8 +60,8 @@ springdoc:
 logging:
   level:
     ru.myapp: info
-    root: warn
-    org.springframework.web: debug
+    root: info
+    org.springframework.web: info
 
 feign:
   client:

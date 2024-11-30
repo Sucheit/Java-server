@@ -80,8 +80,9 @@ public class UserController {
                     content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
-        return userService.createEntity(userRequestDto);
+    public String createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        userService.sendToKafka(userRequestDto);
+        return "UserRequestDto sent to kafka!";
     }
 
     @Operation(summary = "User update")

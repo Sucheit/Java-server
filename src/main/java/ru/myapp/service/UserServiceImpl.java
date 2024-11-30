@@ -1,17 +1,21 @@
 package ru.myapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.aspect.AfterReturningAnnotation;
+import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
+import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.persistence.model.Group;
 import ru.myapp.persistence.model.User;
@@ -26,9 +30,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final GroupRepository groupRepository;
+    private final MessagePublisher messagePublisher;
+    private final KafkaProps kafkaProps;
 
     @Override
     @AfterReturningAnnotation
@@ -54,11 +61,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createEntity(UserRequestDto userRequestDto) {
-        User user = new User();
-        user.setFirstName(userRequestDto.firstName());
-        user.setLastName(userRequestDto.lastName());
+        User user = User.builder()
+                .firstName(userRequestDto.firstName())
+                .lastName(userRequestDto.lastName())
+                .build();
         user = userRepository.save(user);
         return userMapper.userToUserResponseDto(user);
+    }
+
+    @Override
+    public void sendToKafka(UserRequestDto userRequestDto) {
+        log.info("Sending {} to kafka!", userRequestDto);
+        messagePublisher.publish(kafkaProps.getTopics().getUsers(), userRequestDto);
     }
 
     @Override

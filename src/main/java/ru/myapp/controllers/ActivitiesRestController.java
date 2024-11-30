@@ -15,6 +15,6 @@ public class ActivitiesRestController {
 
     @GetMapping
     public Boolean getIsActive() {
-        return activityToggle.getEnabled();
+        return activityToggle.isEnabled();
     }
 }

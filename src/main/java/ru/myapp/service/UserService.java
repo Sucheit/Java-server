@@ -17,6 +17,8 @@ public interface UserService extends CrudService<Integer, UserRequestDto, UserRe
 
     UserResponseDto createEntity(UserRequestDto userRequestDto);
 
+    void sendToKafka(UserRequestDto userRequestDto);
+
     UserResponseDto updateEntity(Integer userId, UserRequestDto userRequestDto);
 
     void deleteEntityById(Integer userId);

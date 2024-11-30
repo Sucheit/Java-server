@@ -13,5 +13,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "activity")
 public class ActivityToggle {
 
-    private Boolean enabled;
+    private boolean enabled;
+    private boolean kafkaSender;
 }

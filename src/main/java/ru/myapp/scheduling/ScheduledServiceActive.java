@@ -18,10 +18,11 @@ public class ScheduledServiceActive implements ScheduledService {
     private final ActivityToggle activityToggle;
     private final Counter scheduledActiveTaskCounter;
 
+    @Override
     @Async("taskExecutor")
     @Scheduled(fixedRate = 5000)
     public void scheduled() {
-        log.info("activity.enable={} Scheduled task: threadID={}", activityToggle.getEnabled(), Thread.currentThread().threadId());
+        log.info("activity.enable={} Scheduled task: threadID={}", activityToggle.isEnabled(), Thread.currentThread().threadId());
         scheduledActiveTaskCounter.increment();
     }
 }
