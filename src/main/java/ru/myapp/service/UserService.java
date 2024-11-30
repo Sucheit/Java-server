@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface UserService extends CrudService<Integer, UserRequestDto, UserResponseDto, UserResponseDtoShort> {
 
+    List<UserResponseDtoShort> getAllEntities(PageRequest pageRequest);
+
     List<UserResponseDtoShort> getAllEntities();
 
     UserResponseDto getEntityById(Integer userId);

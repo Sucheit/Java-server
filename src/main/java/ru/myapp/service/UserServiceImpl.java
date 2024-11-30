@@ -34,9 +34,16 @@ public class UserServiceImpl implements UserService {
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProperties;
 
-    @Transactional(readOnly = true)
     @Override
     @AfterReturningAnnotation
+    @Transactional(readOnly = true)
+    public List<UserResponseDtoShort> getAllEntities(PageRequest pageRequest) {
+        return userMapper.userListToUserResponseDtoShortList(userRepository.findAll(pageRequest).stream().toList());
+    }
+
+    @Override
+    @AfterReturningAnnotation
+    @Transactional(readOnly = true)
     public List<UserResponseDtoShort> getAllEntities() {
         return userMapper.userListToUserResponseDtoShortList(userRepository.getAllUsers());
     }

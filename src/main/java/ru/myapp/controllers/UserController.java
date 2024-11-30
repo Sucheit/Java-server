@@ -50,8 +50,13 @@ public class UserController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDtoShort.class))})})
     @GetMapping
-    public List<UserResponseDtoShort> getUsers() {
-        return userService.getAllEntities();
+    public List<UserResponseDtoShort> getUsers(
+            @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(defaultValue = "10") @Positive int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean asc
+    ) {
+        return userService.getAllEntities(Utils.getPageRequest(from, size, sortBy, asc));
     }
 
     @Operation(summary = "Get user by Id")

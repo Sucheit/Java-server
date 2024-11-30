@@ -8,7 +8,26 @@ values (2, 99);
 insert into users (first_name, last_name)
 values ('Steve', 'Rogers'),
        ('Natasha', 'Romanoff'),
-       ('Tony', 'Stark');
+       ('Tony', 'Stark'),
+       ('Clint', 'Barton'),
+       ('Nick', 'Fury'),
+       ('Phil', 'Coulson'),
+       ('Sam', 'Williams'),
+       ('Wanda', 'Maximoff'),
+       ('Scott', 'Lang'),
+       ('Peter', 'Quill'),
+       ('Peter', 'Parker'),
+       ('Petter', 'Potts'),
+       ('Peggy', 'Carter'),
+       ('Yelena', 'Belova'),
+       ('Marc', 'Spector'),
+       ('Steven', 'Grant'),
+       ('Kamala', 'Khan'),
+       ('Jeniffer', 'Walters'),
+       ('Jack', 'Russell'),
+       ('Kate', 'Bishop'),
+       ('Jane', 'Foster')
+;
 
 insert into passports (user_id, serial_number)
 values (1, '12345'),
