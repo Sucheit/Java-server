@@ -1,6 +1,9 @@
 package ru.myapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.aspect.AfterReturningAnnotation;
@@ -98,5 +101,21 @@ public class UserServiceImpl implements UserService {
         groups.remove(group);
         userRepository.save(user);
         return userMapper.userToUserResponseDto(user);
+    }
+
+    private static ExampleMatcher getExampleMatcher() {
+        return ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withMatcher("firstName", ExampleMatcher.GenericPropertyMatcher::exact);
+    }
+
+    @Override
+    public List<UserResponseDto> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest) {
+        Example<User> userExample = Example.of(userMapper.mapToEntity(userRequestDto), getExampleMatcher());
+        return userRepository.findAll(userExample, pageRequest).stream()
+                .map(userMapper::userToUserResponseDto)
+                .toList();
     }
 }

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +28,7 @@ import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.ApiError;
 import ru.myapp.service.UserService;
+import ru.myapp.utils.Utils;
 
 import java.util.List;
 
@@ -127,5 +131,14 @@ public class UserController {
     public UserResponseDto deleteUserToGroup(@PathVariable Integer userId,
                                              @PathVariable Integer groupId) {
         return userService.deleteUserFromGroup(userId, groupId);
+    }
+
+    @GetMapping("/example")
+    public List<UserResponseDto> getAllUsers(
+            @RequestBody UserRequestDto userRequestDto,
+            @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(defaultValue = "10") @Positive int size
+    ) {
+        return userService.getAllUsersByExample(userRequestDto, Utils.getPageRequest(from, size));
     }
 }

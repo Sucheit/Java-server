@@ -1,5 +1,6 @@
 package ru.myapp.service;
 
+import org.springframework.data.domain.PageRequest;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
@@ -21,4 +22,6 @@ public interface UserService extends CrudService<Integer, UserRequestDto, UserRe
     UserResponseDto addUserToGroup(Integer userId, Integer groupId);
 
     UserResponseDto deleteUserFromGroup(Integer userId, Integer groupId);
+
+    List<UserResponseDto> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest);
 }
