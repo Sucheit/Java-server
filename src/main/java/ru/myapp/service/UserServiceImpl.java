@@ -7,13 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.aspect.AfterReturningAnnotation;
-import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.dto.response.UserResponseDto;
 import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.error.BadRequestException;
 import ru.myapp.error.NotFoundException;
-import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.persistence.model.Group;
 import ru.myapp.persistence.model.User;
@@ -31,8 +29,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final GroupRepository groupRepository;
-    private final MessagePublisher messagePublisher;
-    private final KafkaProps kafkaProperties;
 
     @Override
     @AfterReturningAnnotation
@@ -62,7 +58,6 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userRequestDto.firstName());
         user.setLastName(userRequestDto.lastName());
         user = userRepository.save(user);
-        messagePublisher.publish(kafkaProperties.getTopics().getUsers(), userMapper.userToUserResponseDtoShort(user));
         return userMapper.userToUserResponseDto(user);
     }
 
