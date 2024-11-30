@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 @UtilityClass
 public class Utils {
 
-    public static PageRequest getPageRequest(Integer from, Integer size) {
+    public static PageRequest getPageRequest(int from, int size) {
         return PageRequest.of(from > 0 ? from / size : 0, size);
     }
 }
