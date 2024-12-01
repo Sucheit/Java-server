@@ -4,7 +4,6 @@ values ('group1Name', 'group1Desc'),
 insert into paid_groups(id, cost)
 values (2, 99);
 
-
 insert into users (first_name, last_name)
 values ('Steve', 'Rogers'),
        ('Natasha', 'Romanoff'),

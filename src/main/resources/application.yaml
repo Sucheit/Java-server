@@ -20,9 +20,15 @@ spring:
         ddl-auto: none
         format_sql: true
     show-sql: true
-  sql:
-    init:
-      mode: always
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.yaml
+    liquibase-schema: public
+    database-change-log-lock-table: database_change_log_lock_table
+    database-change-log-table: database_change_log_table
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
 kafka:
   topics:
@@ -61,7 +67,8 @@ logging:
   level:
     ru.myapp: info
     root: info
-    org.springframework.web: info
+    org.springframework.web: debug
+    spring.kafka: debug
 
 feign:
   client:

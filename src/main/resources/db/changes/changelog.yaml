@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      name: create table groups
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 2
+      name: create table users
+      author: Arthur Inzhilov
+      changes:
+        sqlFile:
+          path: sql/init/create_table_users.sql
+          relativeToChangelogFile: true
+          splitStatements: true
+          stripComments: true
+      rollback:
+        sqlFile:
+          path: sql/rollback/drop_table_users.sql
+          relativeToChangelogFile: true
+          splitStatements: true
+          stripComments: true
+
+  - changeSet:
+      id: 3
+      name: create table passports
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_passports.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_passports.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 4
+      name: create table user_groups
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_user_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_user_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 5
+      name: create table paid_groups
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_paid_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_paid_groups.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 6
+      name: create table items
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_items.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_items.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 7
+      name: insert data
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/insert_data.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/truncate_date.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
