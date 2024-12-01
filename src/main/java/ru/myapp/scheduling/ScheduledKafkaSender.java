@@ -14,7 +14,7 @@ import ru.myapp.kafka.publisher.MessagePublisher;
 @Service
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "activity", name = "kafka-sender", havingValue = "true")
-public class ScheduledKafkaSender implements ScheduledService {
+public class ScheduledKafkaSender {
 
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProps;
@@ -27,10 +27,9 @@ public class ScheduledKafkaSender implements ScheduledService {
                 .build();
     }
 
-    @Override
     @Async("taskExecutor")
     @Scheduled(fixedRate = 5000)
-    public void scheduled() {
+    public void scheduledKafkaSender() {
         messagePublisher.publish(kafkaProps.getTopics().getItems(), getItemRequestDto());
     }
 }

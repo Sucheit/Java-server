@@ -117,3 +117,20 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+
+  - changeSet:
+      id: 8
+      name: create table shedlock
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_shedlock.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_shedlock.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
