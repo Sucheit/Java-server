@@ -23,10 +23,10 @@ public class ScheduledServiceActive {
 
     @Async("taskExecutor")
     @Scheduled(fixedRate = 5000)
-    @SchedulerLock(name = "scheduledTask", lockAtMostFor = "30s", lockAtLeastFor = "10s")
+    @SchedulerLock(name = "scheduledTask", lockAtMostFor = "30s", lockAtLeastFor = "15s")
     public void scheduledTask() {
-        log.info("""
-                            activity.enable={} Scheduled task: threadID={}, time={}
+        log.info(""" 
+                        activity.enable={} Scheduled task: threadID={}, time={}
                         """,
                 activityToggle.isEnabled(),
                 Thread.currentThread().threadId(),

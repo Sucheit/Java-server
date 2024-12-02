@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ItemListenerImpl implements MessageListener<Item> {
 
     private final ItemService itemService;
-    private final ScheduledExecutorService executor;
+    private final ScheduledExecutorService itemsScheduledExecutorService;
 
     @Override
     @KafkaListener(topics = "#{kafkaProps.topics.items}",
@@ -26,8 +26,7 @@ public class ItemListenerImpl implements MessageListener<Item> {
             properties = {"spring.json.value.default.type=ru.myapp.persistence.model.Item"})
     public void listenMessage(@Payload Item item) {
         log.info("Kafka received: {}", item);
-        executor.schedule(() -> saveItem(item), 5, TimeUnit.SECONDS);
-        executor.shutdown();
+        itemsScheduledExecutorService.schedule(() -> saveItem(item), 5, TimeUnit.SECONDS);
     }
 
     private void saveItem(Item item) {

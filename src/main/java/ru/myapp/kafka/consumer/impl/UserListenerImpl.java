@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class UserListenerImpl implements MessageListener<UserRequestDto> {
 
     private final UserService userService;
-    private final ScheduledExecutorService executor;
+    private final ScheduledExecutorService usersScheduledExecutorService;
 
     @Override
     @KafkaListener(topics = "#{kafkaProps.topics.users}",
@@ -28,8 +28,7 @@ public class UserListenerImpl implements MessageListener<UserRequestDto> {
     public void listenMessage(@Payload UserRequestDto userRequestDto) {
         log.info("Kafka received: {}", userRequestDto);
 
-        executor.schedule(() -> savingUser(userRequestDto), 5, TimeUnit.SECONDS);
-        executor.shutdown();
+        usersScheduledExecutorService.schedule(() -> savingUser(userRequestDto), 5, TimeUnit.SECONDS);
     }
 
     private void savingUser(UserRequestDto userRequestDto) {
