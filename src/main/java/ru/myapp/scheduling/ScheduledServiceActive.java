@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 public class ScheduledServiceActive {
 
     private final ActivityToggle activityToggle;
-    private final Counter scheduledActiveTaskCounter;
+    private final Counter scheduledTaskCounter;
 
     @Async("taskExecutor")
     @Scheduled(fixedRate = 5000)
@@ -31,6 +31,6 @@ public class ScheduledServiceActive {
                 activityToggle.isEnabled(),
                 Thread.currentThread().threadId(),
                 OffsetDateTime.now());
-        scheduledActiveTaskCounter.increment();
+        scheduledTaskCounter.increment();
     }
 }
