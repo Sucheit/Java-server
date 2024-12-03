@@ -29,6 +29,9 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+  threads:
+    virtual:
+      enabled: true
 
 kafka:
   topics:
@@ -67,8 +70,10 @@ logging:
   level:
     ru.myapp: info
     root: info
-    org.springframework.web: debug
-    spring.kafka: debug
+    org.springframework:
+      web: info
+      transaction: info
+    spring.kafka: info
 
 feign:
   client:

@@ -2,7 +2,9 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - trace.id=%X{trace.id}
+                tx.owner=%X{transaction.owner} %msg%n
+            </pattern>
         </encoder>
     </appender>
 
@@ -17,11 +19,13 @@
             <totalSizeCap>10MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - trace.id=%X{trace.id}
+                tx.owner=%X{transaction.owner} %msg%n
+            </pattern>
         </encoder>
     </appender>
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
