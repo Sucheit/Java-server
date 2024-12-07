@@ -9,14 +9,19 @@ import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomArrayListTests {
 
-    private final CustomArrayList<String> list = new CustomArrayList<>();
+    private CustomArrayList<String> list;
 
     @BeforeEach
     public void beforeEach() {
+        list = new CustomArrayList<>();
         list.add(0, "first");
         list.add(1, "second");
         list.add(2, "third");
