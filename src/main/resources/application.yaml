@@ -73,6 +73,7 @@ logging:
     org.springframework:
       web: info
       transaction: info
+      cache: trace
     spring.kafka: info
 
 feign:

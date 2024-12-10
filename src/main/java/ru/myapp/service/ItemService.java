@@ -11,4 +11,6 @@ public interface ItemService {
     void saveItem(Item item);
 
     ItemResponseDto getItemById(Integer itemId);
+
+    void deleteItem(Integer itemId);
 }

@@ -2,6 +2,7 @@ package ru.myapp.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,5 +29,11 @@ public class ItemController {
     @GetMapping(path = "/{itemId}")
     public ItemResponseDto getItemById(@PathVariable(name = "itemId") Integer itemId) {
         return itemService.getItemById(itemId);
+    }
+
+    @DeleteMapping(path = "/{itemId}")
+    public String deleteItemById(@PathVariable(name = "itemId") Integer itemId) {
+        itemService.deleteItem(itemId);
+        return "Item id=%s deleted".formatted(itemId);
     }
 }

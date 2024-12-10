@@ -2,6 +2,8 @@ package ru.myapp.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.config.kafka.KafkaProps;
@@ -38,9 +40,19 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Cacheable({"items"})
     @Transactional(readOnly = true)
     public ItemResponseDto getItemById(Integer itemId) {
         return itemMapper.toItemResponseDto(itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item id=%s not found".formatted(itemId))));
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict({"items"})
+    public void deleteItem(Integer itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item id=%s not found".formatted(itemId)));
+        itemRepository.delete(item);
     }
 }
