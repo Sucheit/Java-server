@@ -14,7 +14,7 @@ import ru.myapp.dto.response.UserResponseDtoShort;
 import ru.myapp.mappers.UserMapper;
 import ru.myapp.persistence.model.User;
 import ru.myapp.persistence.repository.UserRepository;
-import ru.myapp.service.UserServiceImpl;
+import ru.myapp.service.impl.UserServiceImpl;
 
 import java.util.List;
 

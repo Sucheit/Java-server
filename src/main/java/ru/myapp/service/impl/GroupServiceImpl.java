@@ -1,4 +1,4 @@
-package ru.myapp.service;
+package ru.myapp.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +13,7 @@ import ru.myapp.mappers.GroupMapper;
 import ru.myapp.persistence.model.Group;
 import ru.myapp.persistence.model.PaidGroup;
 import ru.myapp.persistence.repository.GroupRepository;
+import ru.myapp.service.GroupService;
 
 import java.util.List;
 

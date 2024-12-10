@@ -1,9 +1,10 @@
-package ru.myapp.service;
+package ru.myapp.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.config.kafka.KafkaProps;
@@ -14,6 +15,7 @@ import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.ItemMapper;
 import ru.myapp.persistence.model.Item;
 import ru.myapp.persistence.repository.ItemRepository;
+import ru.myapp.service.ItemService;
 
 @Slf4j
 @Service
@@ -24,6 +26,8 @@ public class ItemServiceImpl implements ItemService {
     private final ItemMapper itemMapper;
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProperties;
+    @Lazy
+    private final ItemServiceImpl itemServiceImpl;
 
     @Override
     public void sendToKafka(ItemRequestDto itemRequestDto) {
@@ -36,11 +40,12 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void saveItem(Item item) {
         Item itemSaved = itemRepository.save(item);
+        itemServiceImpl.getItemById(itemSaved.getId());
         log.info("Saved: {}", itemSaved);
     }
 
     @Override
-    @Cacheable({"items"})
+    @Cacheable(cacheNames = "items", key = "#itemId")
     @Transactional(readOnly = true)
     public ItemResponseDto getItemById(Integer itemId) {
         return itemMapper.toItemResponseDto(itemRepository.findById(itemId)
@@ -49,7 +54,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    @CacheEvict({"items"})
+    @CacheEvict(cacheNames = {"items"})
     public void deleteItem(Integer itemId) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item id=%s not found".formatted(itemId)));

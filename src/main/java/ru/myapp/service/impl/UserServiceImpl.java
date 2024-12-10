@@ -1,4 +1,4 @@
-package ru.myapp.service;
+package ru.myapp.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +21,7 @@ import ru.myapp.persistence.model.Group;
 import ru.myapp.persistence.model.User;
 import ru.myapp.persistence.repository.GroupRepository;
 import ru.myapp.persistence.repository.UserRepository;
+import ru.myapp.service.UserService;
 
 import java.util.List;
 import java.util.Set;

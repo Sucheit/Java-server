@@ -1,4 +1,4 @@
-package ru.myapp.service;
+package ru.myapp.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +12,7 @@ import ru.myapp.persistence.model.Passport;
 import ru.myapp.persistence.model.User;
 import ru.myapp.persistence.repository.PassportRepository;
 import ru.myapp.persistence.repository.UserRepository;
+import ru.myapp.service.PassportService;
 
 @Service
 @Slf4j
