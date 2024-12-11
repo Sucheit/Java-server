@@ -3,6 +3,7 @@ package ru.myapp.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import ru.myapp.mappers.ItemMapper;
 import ru.myapp.persistence.model.Item;
 import ru.myapp.persistence.repository.ItemRepository;
 import ru.myapp.service.ItemService;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -59,5 +62,16 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item id=%s not found".formatted(itemId)));
         itemRepository.delete(item);
+    }
+
+    @Override
+    @CachePut(cacheNames = "items", key = "#itemId")
+    public ItemResponseDto putItem(ItemRequestDto itemRequestDto, Integer itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item id=%s not found".formatted(itemId)));
+        Optional.of(itemRequestDto.name()).ifPresent(item::setName);
+        Optional.of(itemRequestDto.description()).ifPresent(item::setDescription);
+        Optional.of(itemRequestDto.amount()).ifPresent(item::setAmount);
+        return itemMapper.toItemResponseDto(itemRepository.save(item));
     }
 }

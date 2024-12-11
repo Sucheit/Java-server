@@ -13,4 +13,6 @@ public interface ItemService {
     ItemResponseDto getItemById(Integer itemId);
 
     void deleteItem(Integer itemId);
+
+    ItemResponseDto putItem(ItemRequestDto itemRequestDto, Integer itemId);
 }
