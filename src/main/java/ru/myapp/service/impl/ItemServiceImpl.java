@@ -15,6 +15,9 @@ import ru.myapp.error.NotFoundException;
 import ru.myapp.kafka.publisher.MessagePublisher;
 import ru.myapp.mappers.ItemMapper;
 import ru.myapp.persistence.model.Item;
+import ru.myapp.persistence.model.ItemFullInfo;
+import ru.myapp.persistence.model.ItemProjection;
+import ru.myapp.persistence.model.ItemView;
 import ru.myapp.persistence.repository.ItemRepository;
 import ru.myapp.service.ItemService;
 
@@ -73,5 +76,20 @@ public class ItemServiceImpl implements ItemService {
         Optional.of(itemRequestDto.description()).ifPresent(item::setDescription);
         Optional.of(itemRequestDto.amount()).ifPresent(item::setAmount);
         return itemMapper.toItemResponseDto(itemRepository.save(item));
+    }
+
+    @Override
+    public ItemView getItemView(Integer itemId) {
+        return itemRepository.findById(itemId, ItemView.class);
+    }
+
+    @Override
+    public ItemFullInfo getFullInfo(Integer itemId) {
+        return itemRepository.findById(itemId, ItemFullInfo.class);
+    }
+
+    @Override
+    public ItemProjection getItemProjection(Integer itemId) {
+        return itemRepository.findById(itemId, ItemProjection.class);
     }
 }

@@ -6,4 +6,6 @@ import ru.myapp.persistence.model.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
+
+    <T> T findById(Integer id, Class<T> projection);
 }
