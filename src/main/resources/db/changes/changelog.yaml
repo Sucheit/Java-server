@@ -146,3 +146,21 @@ databaseChangeLog:
             splitStatements: true
             stripComments: true
 
+
+  - changeSet:
+      id: 10
+      name: create table revision
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/create_table_shedlock.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+      rollback:
+        - sqlFile:
+            path: sql/rollback/drop_table_shedlock.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+

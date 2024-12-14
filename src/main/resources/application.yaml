@@ -27,6 +27,7 @@ spring:
       hibernate:
         ddl-auto: none
         format_sql: true
+        hbm2ddl.auto: update
     show-sql: true
   liquibase:
     enabled: true
