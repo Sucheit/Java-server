@@ -134,3 +134,15 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+
+  - changeSet:
+      id: 9
+      name: add create_at and updated_at to item
+      author: Arthur Inzhilov
+      changes:
+        - sqlFile:
+            path: sql/init/alter_items_add_audit_columns.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+

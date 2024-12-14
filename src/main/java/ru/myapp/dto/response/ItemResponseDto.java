@@ -1,5 +1,7 @@
 package ru.myapp.dto.response;
 
+import java.time.Instant;
+
 public record ItemResponseDto(
 
         Integer id,
@@ -8,6 +10,13 @@ public record ItemResponseDto(
 
         String description,
 
-        Integer amount) {
+        Integer amount,
 
+        Instant createdAt,
+
+        Instant updatedAt,
+
+        String createdBy,
+
+        String updatedBy) {
 }

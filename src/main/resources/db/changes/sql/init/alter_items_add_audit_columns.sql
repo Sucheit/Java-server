@@ -1,0 +1,11 @@
+ALTER TABLE items
+ADD COLUMN created_at TIMESTAMP;
+
+ALTER TABLE items
+ADD COLUMN created_by VARCHAR(255);
+
+ALTER TABLE items
+ADD COLUMN updated_at TIMESTAMP;
+
+ALTER TABLE items
+ADD COLUMN updated_by VARCHAR(255);
