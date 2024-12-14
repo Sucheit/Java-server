@@ -8,6 +8,8 @@ activity:
 spring:
   application:
     name: myapp
+  profiles:
+    active: local,ift
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
   datasource:
