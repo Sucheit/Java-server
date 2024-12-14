@@ -20,6 +20,7 @@ import ru.myapp.mappers.UserMapper;
 import ru.myapp.persistence.model.Group;
 import ru.myapp.persistence.model.User;
 import ru.myapp.persistence.repository.GroupRepository;
+import ru.myapp.persistence.repository.UserFilterRepository;
 import ru.myapp.persistence.repository.UserRepository;
 import ru.myapp.service.UserService;
 
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private final GroupRepository groupRepository;
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProps;
+    private final UserFilterRepository userFilterRepository;
 
     @Override
     @AfterReturningAnnotation
@@ -129,10 +131,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDto> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest) {
+    public List<UserResponseDtoShort> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest) {
         Example<User> userExample = Example.of(userMapper.mapToEntity(userRequestDto), getExampleMatcher());
-        return userRepository.findAll(userExample, pageRequest).stream()
-                .map(userMapper::userToUserResponseDto)
-                .toList();
+        return userMapper.userListToUserResponseDtoShortList(
+                userRepository.findAll(userExample, pageRequest).stream().toList());
+    }
+
+    @Override
+    public List<UserResponseDtoShort> getAllUsersByQueryDSL(UserRequestDto userRequestDto) {
+        return userMapper.userListToUserResponseDtoShortList(
+                userFilterRepository.getAllUsersByQueryDSL(userRequestDto));
     }
 }

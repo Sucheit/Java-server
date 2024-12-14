@@ -27,5 +27,7 @@ public interface UserService extends CrudService<Integer, UserRequestDto, UserRe
 
     UserResponseDto deleteUserFromGroup(Integer userId, Integer groupId);
 
-    List<UserResponseDto> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest);
+    List<UserResponseDtoShort> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest);
+
+    List<UserResponseDtoShort> getAllUsersByQueryDSL(UserRequestDto userRequestDto);
 }

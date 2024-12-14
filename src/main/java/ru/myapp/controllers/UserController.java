@@ -140,11 +140,18 @@ public class UserController {
     }
 
     @GetMapping("/example")
-    public List<UserResponseDto> getAllUsers(
+    public List<UserResponseDtoShort> getAllUsers(
             @RequestBody UserRequestDto userRequestDto,
             @RequestParam(defaultValue = "0") @PositiveOrZero int from,
             @RequestParam(defaultValue = "10") @Positive int size
     ) {
         return userService.getAllUsersByExample(userRequestDto, Utils.getPageRequest(from, size));
+    }
+
+    @GetMapping("/qdsl")
+    public List<UserResponseDtoShort> getAllUsers(
+            @RequestBody UserRequestDto userRequestDto
+    ) {
+        return userService.getAllUsersByQueryDSL(userRequestDto);
     }
 }

@@ -14,6 +14,14 @@ spring:
     url: jdbc:postgresql://localhost:5430/postgres_db
     username: postgres_user
     password: postgres_password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      auto-commit: false
   jpa:
     properties:
       hibernate:
