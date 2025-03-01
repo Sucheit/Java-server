@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 
 activity:
   enabled: true
@@ -78,6 +78,7 @@ springdoc:
     path: /swagger-ui-custom.html
 
 logging:
+  config: classpath:logback.xml
   level:
     ru.myapp: info
     root: info

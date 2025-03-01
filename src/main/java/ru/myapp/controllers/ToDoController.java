@@ -11,7 +11,7 @@ import ru.myapp.feign.TodosFeignClient;
 
 import java.util.List;
 
-@Profile("prod")
+@Profile("local")
 @RestController
 @RequestMapping(path = "/todos")
 @RequiredArgsConstructor
