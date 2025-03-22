@@ -2,7 +2,6 @@ package ru.myapp.service;
 
 import ru.myapp.dto.request.ItemRequestDto;
 import ru.myapp.dto.response.ItemResponseDto;
-import ru.myapp.persistence.model.Item;
 import ru.myapp.persistence.model.ItemFullInfo;
 import ru.myapp.persistence.model.ItemProjection;
 import ru.myapp.persistence.model.ItemView;
@@ -11,7 +10,7 @@ public interface ItemService {
 
     void sendToKafka(ItemRequestDto itemRequestDto);
 
-    void saveItem(Item item);
+    void saveItem(ItemRequestDto itemRequestDto);
 
     ItemResponseDto getItemById(Integer itemId);
 

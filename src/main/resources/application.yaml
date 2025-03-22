@@ -2,7 +2,7 @@ server:
   port: 8080
 
 activity:
-  enabled: true
+  enabled: false
   kafka-sender: false
 
 spring:
@@ -48,6 +48,7 @@ kafka:
   topics:
     users: users
     items: items
+    DLT: DLT
   back-off:
     interval: 5000
     attempts: 3

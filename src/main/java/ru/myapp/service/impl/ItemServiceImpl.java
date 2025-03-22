@@ -44,8 +44,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public void saveItem(Item item) {
-        Item itemSaved = itemRepository.save(item);
+    public void saveItem(ItemRequestDto itemRequestDto) {
+        Item itemSaved = itemRepository.save(itemMapper.toItem(itemRequestDto));
         itemServiceImpl.getItemById(itemSaved.getId());
         log.info("Saved: {}", itemSaved);
     }

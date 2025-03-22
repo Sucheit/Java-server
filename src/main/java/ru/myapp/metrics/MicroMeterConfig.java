@@ -18,4 +18,11 @@ public class MicroMeterConfig {
                 .description("Кол-во выполненных активных задач.")
                 .register(registry);
     }
+
+    @Bean
+    public Counter kafkaValidationErrorsCounter() {
+        return Counter.builder("kafka_validation_error.counter")
+                .description("Кол-во ошибок валидации кафки.")
+                .register(registry);
+    }
 }

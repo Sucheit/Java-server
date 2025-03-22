@@ -1,9 +1,11 @@
 package ru.myapp.kafka.consumer.impl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.kafka.consumer.MessageListener;
@@ -24,8 +26,10 @@ public class UserListenerImpl implements MessageListener<UserRequestDto> {
     @Override
     @KafkaListener(topics = "#{kafkaProps.topics.users}",
             containerFactory = "kafkaListenerContainerFactory",
+            errorHandler = "validationErrorHandler",
             properties = {"spring.json.value.default.type=ru.myapp.dto.request.UserRequestDto"})
-    public void listenMessage(@Payload UserRequestDto userRequestDto) {
+    @SendTo("#{kafkaProps.topics.DLT}")
+    public void listenMessage(@Payload @Valid UserRequestDto userRequestDto) {
         log.info("Kafka received: {}", userRequestDto);
 
         usersScheduledExecutorService.schedule(() -> savingUser(userRequestDto), 5, TimeUnit.SECONDS);
