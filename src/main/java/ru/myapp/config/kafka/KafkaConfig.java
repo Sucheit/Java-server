@@ -82,6 +82,10 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "20");
+        props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1");
+        props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, "52428800");
+        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "500");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
@@ -92,6 +96,7 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         factory.setCommonErrorHandler(kafkaDefaultErrorHandler());
         factory.setConcurrency(kafkaProps.getListener().getConcurrency());
         factory.setReplyTemplate(kafkaTemplate);
+        factory.setBatchListener(true);
         return factory;
     }
 

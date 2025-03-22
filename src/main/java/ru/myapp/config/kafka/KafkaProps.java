@@ -26,6 +26,7 @@ public class KafkaProps {
         private String users;
         private String items;
         private String DLT;
+        private String batchMessages;
     }
 
     @Data

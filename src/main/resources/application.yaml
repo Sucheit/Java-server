@@ -30,6 +30,11 @@ spring:
         ddl-auto: none
         format_sql: true
         hbm2ddl.auto: update
+        jdbc:
+          batch_size: 20
+          batch_versioned_data: true
+          order_inserts: true
+          order_updates: true
     show-sql: true
   liquibase:
     enabled: true
@@ -49,6 +54,7 @@ kafka:
     users: users
     items: items
     DLT: DLT
+    batch-messages: batch-messages
   back-off:
     interval: 5000
     attempts: 3
