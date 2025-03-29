@@ -37,9 +37,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void sendToKafka(ItemRequestDto itemRequestDto) {
-        Item item = itemMapper.toItem(itemRequestDto);
-        log.info("Sent to kafka: {}", item);
-        messagePublisher.publish(kafkaProperties.getTopics().getItems(), item);
+        log.info("Sent to kafka: {}", itemRequestDto);
+        messagePublisher.publish(kafkaProperties.getTopics().getItems(), itemRequestDto);
     }
 
     @Override
