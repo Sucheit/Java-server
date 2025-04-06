@@ -24,6 +24,9 @@ public class MessageEntity {
     @GeneratedValue
     private UUID id;
 
+    @Column(name = "message_id")
+    private String messageId;
+
     @Column(name = "message")
     private String message;
 }

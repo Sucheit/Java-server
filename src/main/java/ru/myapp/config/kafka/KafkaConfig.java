@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.IsolationLevel;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.actuate.metrics.MetricsEndpoint;
@@ -65,6 +66,10 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         Map<String, Object> props = kafkaProps.getConnection().buildProducerProperties(null);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomJsonSerializer.class);
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-transactional-id");
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.put(ProducerConfig.RETRIES_CONFIG, "5");
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
         return new DefaultKafkaProducerFactory<>(props);
     }
 
@@ -86,6 +91,7 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1");
         props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, "52428800");
         props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "500");
+        props.put(ConsumerConfig.DEFAULT_ISOLATION_LEVEL, IsolationLevel.READ_COMMITTED);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 

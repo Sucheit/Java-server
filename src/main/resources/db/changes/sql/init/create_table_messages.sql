@@ -1,4 +1,5 @@
 create table messages (
     id UUID  primary key,
-    message varchar(255) not null
+    message_id varchar(36) not null,
+    message varchar(36) not null
 );

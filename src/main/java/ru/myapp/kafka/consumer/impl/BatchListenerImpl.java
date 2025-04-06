@@ -2,6 +2,7 @@ package ru.myapp.kafka.consumer.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -17,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class BatchListenerImpl implements BatchMessageListener<BatchMessage> {
+public class BatchListenerImpl implements BatchMessageListener<ConsumerRecord<String, BatchMessage>> {
 
     @Qualifier("taskExecutor")
     private final ExecutorService executor;
@@ -28,7 +29,7 @@ public class BatchListenerImpl implements BatchMessageListener<BatchMessage> {
             containerFactory = "kafkaListenerContainerFactory",
             batch = "true",
             properties = {"spring.json.value.default.type=ru.myapp.dto.request.BatchMessage"})
-    public void listenBatchMessages(@Payload List<BatchMessage> messages) throws InterruptedException {
+    public void listenBatchMessages(@Payload List<ConsumerRecord<String, BatchMessage>> messages) throws InterruptedException {
         log.info("Kafka received batch size = {}", messages.size());
         CountDownLatch countDownLatch = new CountDownLatch(messages.size());
         messages.forEach(message -> executor.submit(() -> {

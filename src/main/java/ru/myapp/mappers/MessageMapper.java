@@ -8,6 +8,7 @@ import ru.myapp.persistence.model.MessageEntity;
 @Mapper(componentModel = "spring")
 public interface MessageMapper {
 
-    @Mapping(target = "message", source = "message")
-    MessageEntity toEntity(BatchMessage batchMessage);
+    @Mapping(target = "messageId", source = "header")
+    @Mapping(target = "message", source = "batchMessage.message")
+    MessageEntity toEntity(String header, BatchMessage batchMessage);
 }
