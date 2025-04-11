@@ -61,7 +61,7 @@ kafka:
   listener:
     concurrency: 3
   connection:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
     consumer:
       groupId: consumer-id
       clientId: consumer-client-di
@@ -91,9 +91,11 @@ logging:
     root: info
     org.springframework:
       web: info
-      transaction: info
+      transaction: debug
       cache: trace
+      kafka: info
     spring.kafka: info
+    org.apache.kafka: info
 
 feign:
   client:

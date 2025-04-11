@@ -2,6 +2,7 @@ package ru.myapp.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,12 +31,14 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
+    @Qualifier("TransactionalMessagePublisherImpl")
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProperties;
     @Lazy
     private final ItemServiceImpl itemServiceImpl;
 
     @Override
+    @Transactional(transactionManager = "kafkaTransactionManager")
     public void sendToKafka(ItemRequestDto itemRequestDto) {
         log.info("Sent to kafka: {}", itemRequestDto);
         messagePublisher.publish(kafkaProperties.getTopics().getItems(), itemRequestDto);

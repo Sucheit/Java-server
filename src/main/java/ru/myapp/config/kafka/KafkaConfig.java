@@ -21,6 +21,7 @@ import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.DefaultTransactionIdSuffixStrategy;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -29,6 +30,7 @@ import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.listener.KafkaListenerErrorHandler;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.util.backoff.FixedBackOff;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -66,11 +68,23 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         Map<String, Object> props = kafkaProps.getConnection().buildProducerProperties(null);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomJsonSerializer.class);
-        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-transactional-id");
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "tx");
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, kafkaProps.getConnection().getProducer().getClientId());
         props.put(ProducerConfig.RETRIES_CONFIG, "5");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
-        return new DefaultKafkaProducerFactory<>(props);
+        props.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, "60000");
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000");
+        var defaultTransactionIdSuffixStrategy = new DefaultTransactionIdSuffixStrategy(5);
+        var defaultKafkaProducerFactory = new DefaultKafkaProducerFactory<String, Object>(props);
+        defaultKafkaProducerFactory.setTransactionIdSuffixStrategy(defaultTransactionIdSuffixStrategy);
+        return defaultKafkaProducerFactory;
+    }
+
+    @Bean
+    public KafkaTransactionManager<String, Object> kafkaTransactionManager(
+            ProducerFactory<String, Object> producerFactory) {
+        return new KafkaTransactionManager<>(producerFactory);
     }
 
     @Bean
