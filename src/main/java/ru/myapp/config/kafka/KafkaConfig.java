@@ -12,6 +12,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListenerConfigurer;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -75,6 +76,8 @@ public class KafkaConfig implements KafkaListenerConfigurer {
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, "60000");
         props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000");
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384); // 16KB batch size
+        props.put(ProducerConfig.LINGER_MS_CONFIG, 10);
         var defaultTransactionIdSuffixStrategy = new DefaultTransactionIdSuffixStrategy(5);
         var defaultKafkaProducerFactory = new DefaultKafkaProducerFactory<String, Object>(props);
         defaultKafkaProducerFactory.setTransactionIdSuffixStrategy(defaultTransactionIdSuffixStrategy);
@@ -110,6 +113,7 @@ public class KafkaConfig implements KafkaListenerConfigurer {
     }
 
     @Bean
+    @Primary
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory(KafkaTemplate<String, Object> kafkaTemplate) {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, Object>();
         factory.setConsumerFactory(consumerFactory());

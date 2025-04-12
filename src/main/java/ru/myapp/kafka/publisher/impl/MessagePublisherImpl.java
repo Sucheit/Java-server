@@ -3,15 +3,11 @@ package ru.myapp.kafka.publisher.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.header.Header;
-import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.myapp.kafka.publisher.MessagePublisher;
 
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -34,11 +30,5 @@ public class MessagePublisherImpl implements MessagePublisher {
                         log.error("Unable to send message to topic [{}] due to : {}", topic, ex.getMessage());
                     }
                 });
-    }
-
-    private List<Header> mapToHeaders(Map<String, String> headers) {
-        return headers.entrySet().stream()
-                .map(e -> (Header) new RecordHeader(e.getKey(), e.getValue().getBytes(StandardCharsets.UTF_8)))
-                .toList();
     }
 }

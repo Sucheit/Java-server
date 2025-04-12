@@ -10,8 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Setter
 @Getter
@@ -22,7 +20,7 @@ public class MessageEntity {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     @Column(name = "message_id")
     private String messageId;

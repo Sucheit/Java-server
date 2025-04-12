@@ -13,4 +13,6 @@ public class Constants {
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
+    public static final int BATCH_SIZE = 1000;
+
 }

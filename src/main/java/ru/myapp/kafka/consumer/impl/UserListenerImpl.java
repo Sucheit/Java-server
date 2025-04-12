@@ -8,7 +8,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 import ru.myapp.dto.request.UserRequestDto;
-import ru.myapp.kafka.consumer.MessageListener;
 import ru.myapp.service.UserService;
 
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,12 +17,11 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserListenerImpl implements MessageListener<UserRequestDto> {
+public class UserListenerImpl {
 
     private final UserService userService;
     private final ScheduledExecutorService usersScheduledExecutorService;
 
-    @Override
     @KafkaListener(topics = "#{kafkaProps.topics.users}",
             containerFactory = "kafkaListenerContainerFactory",
             errorHandler = "validationErrorHandler",
