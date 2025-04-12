@@ -26,8 +26,8 @@ public class BatchMessagePublisherImpl implements BatchMessagePublisher {
                 new ProducerRecord<>(topic, message.partition(), message.key(), message.message(), mapToHeaders(message.headers()))
         ));
 
-        producerRecordList.
-                forEach(producerRecord -> {
+        producerRecordList
+                .forEach(producerRecord -> {
                     kafkaTemplate
                             .send(producerRecord)
                             .whenComplete((result, ex) -> {

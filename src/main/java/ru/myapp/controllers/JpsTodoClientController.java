@@ -15,7 +15,7 @@ import java.util.List;
 @Profile("ift")
 @RequiredArgsConstructor
 @RequestMapping("/jpsTodoClient")
-public class jpsTodoClientController {
+public class JpsTodoClientController {
 
     private final JpsTodoClient jpsTodoClient;
 

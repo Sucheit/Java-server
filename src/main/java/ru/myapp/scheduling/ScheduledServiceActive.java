@@ -25,7 +25,7 @@ public class ScheduledServiceActive {
     @Scheduled(fixedRate = 5000)
     @SchedulerLock(name = "scheduledTask", lockAtMostFor = "30s", lockAtLeastFor = "15s")
     public void scheduledTask() {
-        log.info(""" 
+        log.info("""
                         activity.enable={} Scheduled task: threadID={}, time={}
                         """,
                 activityToggle.isEnabled(),
