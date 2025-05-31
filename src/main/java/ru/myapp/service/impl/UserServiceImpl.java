@@ -1,5 +1,11 @@
 package ru.myapp.service.impl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +30,7 @@ import ru.myapp.persistence.repository.UserFilterRepository;
 import ru.myapp.persistence.repository.UserRepository;
 import ru.myapp.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +46,8 @@ public class UserServiceImpl implements UserService {
     private final MessagePublisher messagePublisher;
     private final KafkaProps kafkaProps;
     private final UserFilterRepository userFilterRepository;
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     @Override
     @AfterReturningAnnotation
@@ -141,5 +150,31 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDtoShort> getAllUsersByQueryDSL(UserRequestDto userRequestDto) {
         return userMapper.userListToUserResponseDtoShortList(
                 userFilterRepository.getAllUsersByQueryDSL(userRequestDto));
+    }
+
+    @Override
+    @Transactional
+    public List<UserResponseDtoShort> getAllUsersByCriteriaAPI(UserRequestDto userRequestDto) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        String firstName = userRequestDto.firstName();
+        String lastName = userRequestDto.lastName();
+
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (firstName != null) {
+            predicates.add(builder.like(root.get("firstName"), firstName));
+        }
+        if (lastName != null) {
+            predicates.add(builder.like(root.get("lastName"), "%" + lastName + "%"));
+        }
+        if (!predicates.isEmpty()) {
+            criteria.where(builder.and(predicates.toArray(new Predicate[0])));
+        }
+        return entityManager.createQuery(criteria).getResultList().stream()
+                .map(userMapper::userToUserResponseDtoShort)
+                .toList();
     }
 }

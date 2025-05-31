@@ -30,4 +30,6 @@ public interface UserService extends CrudService<Integer, UserRequestDto, UserRe
     List<UserResponseDtoShort> getAllUsersByExample(UserRequestDto userRequestDto, PageRequest pageRequest);
 
     List<UserResponseDtoShort> getAllUsersByQueryDSL(UserRequestDto userRequestDto);
+
+    List<UserResponseDtoShort> getAllUsersByCriteriaAPI(UserRequestDto userRequestDto);
 }

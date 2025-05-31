@@ -152,4 +152,11 @@ public class UserController {
     ) {
         return userService.getAllUsersByQueryDSL(userRequestDto);
     }
+
+    @GetMapping("/criteria-api")
+    public List<UserResponseDtoShort> getAllUsersByCriteriaAPI(
+            @RequestBody UserRequestDto userRequestDto
+    ) {
+        return userService.getAllUsersByCriteriaAPI(userRequestDto);
+    }
 }
