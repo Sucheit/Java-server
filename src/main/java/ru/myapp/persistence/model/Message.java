@@ -2,13 +2,12 @@ package ru.myapp.persistence.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Setter
@@ -16,11 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "messages")
-public class MessageEntity {
-
-    @Id
-    @GeneratedValue
-    private Integer id;
+@BatchSize(size = 5) // не работает без LazyLoad
+public class Message extends AbstractEntity {
 
     @Column(name = "message_id")
     private String messageId;

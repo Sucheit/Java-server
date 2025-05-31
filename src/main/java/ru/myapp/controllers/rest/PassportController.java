@@ -1,4 +1,4 @@
-package ru.myapp.controllers;
+package ru.myapp.controllers.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

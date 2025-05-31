@@ -1,4 +1,4 @@
-package ru.myapp.controllers;
+package ru.myapp.controllers.mvc;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

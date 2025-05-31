@@ -35,7 +35,7 @@ spring:
           batch_versioned_data: true
           order_inserts: true
           order_updates: true
-    show-sql: true
+    show-sql: false
   liquibase:
     enabled: true
     change-log: classpath:db/changelog-master.yaml
@@ -89,13 +89,17 @@ logging:
   level:
     ru.myapp: info
     root: info
-    org.springframework:
-      web: info
-      transaction: debug
-      cache: trace
-      kafka: info
+    org:
+      springframework:
+        web: info
+        transaction: debug
+        cache: trace
+        kafka: info
+      apache.kafka: info
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace
     spring.kafka: info
-    org.apache.kafka: info
 
 feign:
   client:

@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +34,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "groups")
 @ToString(callSuper = true)
+@BatchSize(size = 1)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Group extends AbstractEntity {
 

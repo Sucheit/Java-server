@@ -1,4 +1,4 @@
-package ru.myapp.controllers;
+package ru.myapp.controllers.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

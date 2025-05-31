@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.BatchMessage;
 import ru.myapp.dto.request.MessagePublisherDto;
 import ru.myapp.dto.request.MessageRequestDto;
+import ru.myapp.dto.response.MessageResponseDto;
 import ru.myapp.kafka.publisher.BatchMessagePublisher;
 import ru.myapp.mappers.MessageMapper;
 import ru.myapp.persistence.repository.MessageRepository;
@@ -54,5 +56,10 @@ public class MessageServiceImpl implements MessageService {
                         .build()));
         messagePublisher.publishBatch(kafkaProps.getTopics().getBatchMessages(), messageDtoList);
         log.info("Producer records are formed and sent for publishing!");
+    }
+
+    @Override
+    public List<MessageResponseDto> getMessages(PageRequest pageRequest) {
+        return messageMapper.toResponseDtos(messageRepository.findAll(pageRequest).get().toList());
     }
 }

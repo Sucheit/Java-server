@@ -153,7 +153,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public List<UserResponseDtoShort> getAllUsersByCriteriaAPI(UserRequestDto userRequestDto) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 

@@ -1,6 +1,7 @@
 package ru.myapp.mappers;
 
 import org.mapstruct.Mapper;
+import ru.myapp.config.MapstructConfig;
 import ru.myapp.dto.response.GroupResponseDto;
 import ru.myapp.dto.response.GroupResponseDtoShort;
 import ru.myapp.dto.response.PaidGroupResponseDto;
@@ -10,7 +11,7 @@ import ru.myapp.persistence.model.PaidGroup;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = MapstructConfig.class)
 public interface GroupMapper {
 
     GroupResponseDto groupToGroupResponseDto(Group group);

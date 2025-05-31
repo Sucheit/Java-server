@@ -1,4 +1,4 @@
-package ru.myapp.controllers;
+package ru.myapp.controllers.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;

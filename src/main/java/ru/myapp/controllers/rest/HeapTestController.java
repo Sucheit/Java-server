@@ -1,4 +1,4 @@
-package ru.myapp.controllers;
+package ru.myapp.controllers.rest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
