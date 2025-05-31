@@ -66,7 +66,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
+    @Transactional(timeout = 10)
     public MessageResponseDto getMessageByMessageId(String messageId) {
         Message message = messageRepository.findByMessageId(messageId)
                 .orElseThrow(
