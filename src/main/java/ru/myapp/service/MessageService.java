@@ -14,4 +14,7 @@ public interface MessageService {
     void sendMessages(int amountOfMessages);
 
     List<MessageResponseDto> getMessages(PageRequest pageRequest);
+
+    MessageResponseDto getMessageByMessageId(String messageId);
+
 }

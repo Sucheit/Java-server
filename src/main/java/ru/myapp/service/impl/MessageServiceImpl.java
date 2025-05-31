@@ -12,8 +12,10 @@ import ru.myapp.dto.request.BatchMessage;
 import ru.myapp.dto.request.MessagePublisherDto;
 import ru.myapp.dto.request.MessageRequestDto;
 import ru.myapp.dto.response.MessageResponseDto;
+import ru.myapp.error.NotFoundException;
 import ru.myapp.kafka.publisher.BatchMessagePublisher;
 import ru.myapp.mappers.MessageMapper;
+import ru.myapp.persistence.model.Message;
 import ru.myapp.persistence.repository.MessageRepository;
 import ru.myapp.service.MessageService;
 import ru.myapp.utils.Constants;
@@ -61,5 +63,14 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageResponseDto> getMessages(PageRequest pageRequest) {
         return messageMapper.toResponseDtos(messageRepository.findAll(pageRequest).get().toList());
+    }
+
+    @Override
+    @Transactional
+    public MessageResponseDto getMessageByMessageId(String messageId) {
+        Message message = messageRepository.findByMessageId(messageId)
+                .orElseThrow(
+                        () -> new NotFoundException("Message not found with messageId=%s".formatted(messageId)));
+        return messageMapper.toResponseDto(message);
     }
 }
