@@ -1,4 +1,4 @@
-package ru.myapp.config.remover;
+package ru.myapp.context;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
