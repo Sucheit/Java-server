@@ -11,10 +11,10 @@ import ru.myapp.feign.TodosFeignClient;
 
 import java.util.List;
 
-@Profile("local")
 @RestController
-@RequestMapping(path = "/todos")
+@Profile("local")
 @RequiredArgsConstructor
+@RequestMapping(path = "/todos")
 public class ToDoController {
 
     private final TodosFeignClient todosFeignClient;

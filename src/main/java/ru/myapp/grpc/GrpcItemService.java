@@ -29,24 +29,30 @@ public class GrpcItemService extends HelloWorldServiceGrpc.HelloWorldServiceImpl
     @Override
     @Transactional
     public void saveItem(ItemRequestDto itemRequestDto, StreamObserver<ItemResponseDto> responseObserver) {
-        ru.myapp.dto.request.ItemRequestDto requestDto = grpcMapper.map(itemRequestDto);
-        log.info("gRPC: Получен ItemRequestDto: {}", requestDto);
+        try {
+            ru.myapp.dto.request.ItemRequestDto requestDto = grpcMapper.map(itemRequestDto);
+            log.info("gRPC: Получен ItemRequestDto: {}", requestDto);
 
-        Item item = itemRepository.save(itemMapper.toItem(requestDto));
+            Item item = itemRepository.save(itemMapper.toItem(requestDto));
 
-        log.info("В бд сохранен item: {}", item);
+            log.info("В бд сохранен item: {}", item);
 
-        ItemResponseDto itemResponseDto = ItemResponseDto.newBuilder()
-                .setId(item.getId())
-                .setName(item.getName())
-                .setDescription(item.getDescription())
-                .setAmount(item.getAmount())
-                .setEventTime(instantToTimestamp(item.getCreatedAt()))
-                .build();
+            ItemResponseDto itemResponseDto = ItemResponseDto.newBuilder()
+                    .setId(item.getId())
+                    .setName(item.getName())
+                    .setDescription(item.getDescription())
+                    .setAmount(item.getAmount())
+                    .setEventTime(instantToTimestamp(item.getCreatedAt()))
+                    .build();
 
-        responseObserver.onNext(itemResponseDto);
-        responseObserver.onCompleted();
+            responseObserver.onNext(itemResponseDto);
+            responseObserver.onCompleted();
 
-        log.info("gRPC: Отправлен ItemResponseDto: {}", itemMapper.toItemResponseDto(item));
+            log.info("gRPC: Отправлен ItemResponseDto: {}", itemMapper.toItemResponseDto(item));
+        } catch (Throwable throwable) {
+            log.error("gRPC: Возникла ошибка:", throwable);
+            responseObserver.onError(throwable);
+            throw throwable;
+        }
     }
 }

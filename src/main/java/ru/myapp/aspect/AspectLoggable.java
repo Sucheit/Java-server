@@ -19,25 +19,30 @@ public class AspectLoggable {
 
     private static final Logger logger = LogManager.getLogger(AspectLoggable.class);
 
-    @Pointcut("within(ru.myapp.controllers.*)")
+    @Pointcut("execution(* ru.myapp.controllers..*.*(..))")
     private void controllersMethods() {
     }
 
     @Around("controllersMethods()")
     public Object methodLoggingAndExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getTarget().toString();
-        Object[] args = joinPoint.getArgs();
+        try {
+            String methodName = joinPoint.getSignature().getName();
+            String className = joinPoint.getTarget().toString();
+            Object[] args = joinPoint.getArgs();
 
-        logger.info("Class: {}, Method: {}() called with agrs: {}", className, methodName, Arrays.toString(args));
+            logger.info("Class: {}, Method: {}() called with agrs: {}", className, methodName, Arrays.toString(args));
 
-        final long start = System.currentTimeMillis();
-        final Object result = joinPoint.proceed();
-        final long executionTime = System.currentTimeMillis() - start;
+            final long start = System.currentTimeMillis();
+            final Object result = joinPoint.proceed();
+            final long executionTime = System.currentTimeMillis() - start;
 
-        logger.info("Class: {}, Method: {}()  returned: {}", className, methodName, result);
-        logger.info("Class: {}, Method: {}()  executed in {} ms", className, methodName, executionTime);
-        return result;
+            logger.info("Class: {}, Method: {}()  returned: {}", className, methodName, result);
+            logger.info("Class: {}, Method: {}()  executed in {} ms", className, methodName, executionTime);
+            return result;
+        } catch (Throwable e) {
+            logger.error("Controller error: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @Pointcut("execution(* ru.myapp.error.ErrorHandler.*(..))")

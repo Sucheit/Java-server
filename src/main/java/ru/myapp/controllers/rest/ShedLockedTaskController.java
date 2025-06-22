@@ -9,9 +9,9 @@ import ru.myapp.service.ShedLockTaskStarter;
 
 import java.time.OffsetDateTime;
 
-@RequestMapping(path = "shedlock")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(path = "shedlock")
 public class ShedLockedTaskController {
 
     private final ShedLockTaskStarter shedLockTaskStarter;
