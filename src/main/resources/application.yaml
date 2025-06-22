@@ -5,6 +5,14 @@ activity:
   enabled: false
   kafka-sender: false
 
+grpc:
+  client:
+    greeting:
+      address: static://localhost:9080
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
 spring:
   application:
     name: myapp
