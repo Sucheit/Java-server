@@ -22,42 +22,43 @@ import ru.myapp.service.ItemService;
 @RequestMapping(path = "/items")
 public class ItemController {
 
-    private final ItemService itemService;
+  private final ItemService itemService;
 
-    @PostMapping
-    public String sendItemToKafka(@RequestBody @Valid ItemRequestDto itemRequestDto) {
-        itemService.sendToKafka(itemRequestDto);
-        return "Item sent to kafka";
-    }
+  @PostMapping
+  public String sendItemToKafka(@RequestBody @Valid ItemRequestDto itemRequestDto) {
+    itemService.sendToKafka(itemRequestDto);
+    return "Item sent to kafka";
+  }
 
-    @GetMapping(path = "/{itemId}")
-    public ItemResponseDto getItemById(@PathVariable(name = "itemId") Integer itemId) {
-        return itemService.getItemById(itemId);
-    }
+  @GetMapping(path = "/{itemId}")
+  public ItemResponseDto getItemById(@PathVariable(name = "itemId") Integer itemId) {
+    return itemService.getItemById(itemId);
+  }
 
-    @DeleteMapping(path = "/{itemId}")
-    public String deleteItemById(@PathVariable(name = "itemId") Integer itemId) {
-        itemService.deleteItem(itemId);
-        return "Item id=%s deleted".formatted(itemId);
-    }
+  @DeleteMapping(path = "/{itemId}")
+  public String deleteItemById(@PathVariable(name = "itemId") Integer itemId) {
+    itemService.deleteItem(itemId);
+    return "Item id=%s deleted".formatted(itemId);
+  }
 
-    @PutMapping(path = "/{itemId}")
-    public ItemResponseDto putItem(@RequestBody ItemRequestDto itemRequestDto, @PathVariable Integer itemId) {
-        return itemService.putItem(itemRequestDto, itemId);
-    }
+  @PutMapping(path = "/{itemId}")
+  public ItemResponseDto putItem(@RequestBody ItemRequestDto itemRequestDto,
+      @PathVariable Integer itemId) {
+    return itemService.putItem(itemRequestDto, itemId);
+  }
 
-    @GetMapping(path = "/view/{itemId}")
-    public ItemView getViewItem(@PathVariable(name = "itemId") Integer itemId) {
-        return itemService.getItemView(itemId);
-    }
+  @GetMapping(path = "/view/{itemId}")
+  public ItemView getViewItem(@PathVariable(name = "itemId") Integer itemId) {
+    return itemService.getItemView(itemId);
+  }
 
-    @GetMapping(path = "/info/{itemId}")
-    public ItemFullInfo getItemFullInfo(@PathVariable(name = "itemId") Integer itemId) {
-        return itemService.getFullInfo(itemId);
-    }
+  @GetMapping(path = "/info/{itemId}")
+  public ItemFullInfo getItemFullInfo(@PathVariable(name = "itemId") Integer itemId) {
+    return itemService.getFullInfo(itemId);
+  }
 
-    @GetMapping(path = "/projection/{itemId}")
-    public ItemProjection getItemProjection(@PathVariable(name = "itemId") Integer itemId) {
-        return itemService.getItemProjection(itemId);
-    }
+  @GetMapping(path = "/projection/{itemId}")
+  public ItemProjection getItemProjection(@PathVariable(name = "itemId") Integer itemId) {
+    return itemService.getItemProjection(itemId);
+  }
 }

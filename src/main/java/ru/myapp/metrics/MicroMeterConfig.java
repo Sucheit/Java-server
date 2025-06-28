@@ -10,19 +10,19 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class MicroMeterConfig {
 
-    private final MeterRegistry registry;
+  private final MeterRegistry registry;
 
-    @Bean
-    public Counter scheduledTaskCounter() {
-        return Counter.builder("scheduled_tasks.counter")
-                .description("Кол-во выполненных активных задач.")
-                .register(registry);
-    }
+  @Bean
+  public Counter scheduledTaskCounter() {
+    return Counter.builder("scheduled_tasks.counter")
+        .description("Кол-во выполненных активных задач.")
+        .register(registry);
+  }
 
-    @Bean
-    public Counter kafkaValidationErrorsCounter() {
-        return Counter.builder("kafka_validation_error.counter")
-                .description("Кол-во ошибок валидации кафки.")
-                .register(registry);
-    }
+  @Bean
+  public Counter kafkaValidationErrorsCounter() {
+    return Counter.builder("kafka_validation_error.counter")
+        .description("Кол-во ошибок валидации кафки.")
+        .register(registry);
+  }
 }

@@ -9,7 +9,7 @@ import ru.myapp.persistence.model.Item;
 @Mapper(config = MapstructConfig.class)
 public interface ItemMapper {
 
-    ItemResponseDto toItemResponseDto(Item item);
+  ItemResponseDto toItemResponseDto(Item item);
 
-    Item toItem(ItemRequestDto itemRequestDto);
+  Item toItem(ItemRequestDto itemRequestDto);
 }

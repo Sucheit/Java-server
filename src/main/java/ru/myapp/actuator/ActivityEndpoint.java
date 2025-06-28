@@ -12,10 +12,10 @@ import ru.myapp.config.ActivityToggle;
 @Endpoint(id = "activity")
 public class ActivityEndpoint {
 
-    private final ActivityToggle activityToggle;
+  private final ActivityToggle activityToggle;
 
-    @WriteOperation
-    public void activityEnable(@Selector Boolean isEnable) {
-        activityToggle.setEnabled(isEnable);
-    }
+  @WriteOperation
+  public void activityEnable(@Selector Boolean isEnable) {
+    activityToggle.setEnabled(isEnable);
+  }
 }

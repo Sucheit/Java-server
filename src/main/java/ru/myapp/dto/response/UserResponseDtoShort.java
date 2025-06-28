@@ -8,7 +8,7 @@ public record UserResponseDtoShort(Integer id,
                                    String firstName,
                                    String lastName) {
 
-    @Builder
-    public UserResponseDtoShort {
-    }
+  @Builder
+  public UserResponseDtoShort {
+  }
 }

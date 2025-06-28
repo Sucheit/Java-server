@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.io.Serializable;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +14,6 @@ import lombok.Setter;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
-
-import java.io.Serializable;
-import java.time.Instant;
 
 @Setter
 @Getter
@@ -25,11 +24,11 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Revision implements Serializable {
 
-    @Id
-    @RevisionNumber
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @RevisionNumber
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @RevisionTimestamp
-    private Instant timestamp;
+  @RevisionTimestamp
+  private Instant timestamp;
 }

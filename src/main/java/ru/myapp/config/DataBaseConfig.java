@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DataBaseConfig {
 
-    @Bean
-    @Primary
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactory);
-        return txManager;
-    }
+  @Bean
+  @Primary
+  public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    JpaTransactionManager txManager = new JpaTransactionManager();
+    txManager.setEntityManagerFactory(entityManagerFactory);
+    return txManager;
+  }
 }

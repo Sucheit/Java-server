@@ -18,9 +18,9 @@ import org.hibernate.annotations.BatchSize;
 @BatchSize(size = 5) // не работает без LazyLoad
 public class Message extends AbstractEntity {
 
-    @Column(name = "message_id")
-    private String messageId;
+  @Column(name = "message_id")
+  private String messageId;
 
-    @Column(name = "message")
-    private String message;
+  @Column(name = "message")
+  private String message;
 }

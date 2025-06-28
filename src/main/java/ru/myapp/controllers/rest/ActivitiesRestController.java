@@ -11,10 +11,10 @@ import ru.myapp.config.ActivityToggle;
 @RequiredArgsConstructor
 public class ActivitiesRestController {
 
-    private final ActivityToggle activityToggle;
+  private final ActivityToggle activityToggle;
 
-    @GetMapping
-    public Boolean getIsActive() {
-        return activityToggle.isEnabled();
-    }
+  @GetMapping
+  public Boolean getIsActive() {
+    return activityToggle.isEnabled();
+  }
 }

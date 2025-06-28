@@ -8,19 +8,19 @@ import ru.myapp.persistence.model.ItemView;
 
 public interface ItemService {
 
-    void sendToKafka(ItemRequestDto itemRequestDto);
+  void sendToKafka(ItemRequestDto itemRequestDto);
 
-    void saveItem(ItemRequestDto itemRequestDto);
+  void saveItem(ItemRequestDto itemRequestDto);
 
-    ItemResponseDto getItemById(Integer itemId);
+  ItemResponseDto getItemById(Integer itemId);
 
-    void deleteItem(Integer itemId);
+  void deleteItem(Integer itemId);
 
-    ItemResponseDto putItem(ItemRequestDto itemRequestDto, Integer itemId);
+  ItemResponseDto putItem(ItemRequestDto itemRequestDto, Integer itemId);
 
-    ItemView getItemView(Integer itemId);
+  ItemView getItemView(Integer itemId);
 
-    ItemFullInfo getFullInfo(Integer itemId);
+  ItemFullInfo getFullInfo(Integer itemId);
 
-    ItemProjection getItemProjection(Integer itemId);
+  ItemProjection getItemProjection(Integer itemId);
 }

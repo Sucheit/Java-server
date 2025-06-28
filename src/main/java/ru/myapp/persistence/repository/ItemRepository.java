@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import ru.myapp.persistence.model.Item;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Integer>, RevisionRepository<Item, Integer, Integer> {
+public interface ItemRepository extends JpaRepository<Item, Integer>,
+    RevisionRepository<Item, Integer, Integer> {
 
-    <T> T findById(Integer id, Class<T> projection);
+  <T> T findById(Integer id, Class<T> projection);
 }

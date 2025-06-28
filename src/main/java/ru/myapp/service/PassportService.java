@@ -5,9 +5,9 @@ import ru.myapp.dto.response.PassportResponseDto;
 
 public interface PassportService {
 
-    PassportResponseDto getPasswordByUserId(Integer userId);
+  PassportResponseDto getPasswordByUserId(Integer userId);
 
-    PassportResponseDto getPasswordById(Integer passportId);
+  PassportResponseDto getPasswordById(Integer passportId);
 
-    PassportResponseDto createPassport(Integer userId, PassportRequestDto passportRequestDto);
+  PassportResponseDto createPassport(Integer userId, PassportRequestDto passportRequestDto);
 }

@@ -14,12 +14,12 @@ import ru.myapp.service.OuterTransactionalService;
 @RequiredArgsConstructor
 public class TransactionController {
 
-    private final OuterTransactionalService outerTransactionalService;
+  private final OuterTransactionalService outerTransactionalService;
 
-    @GetMapping(path = "/transactional")
-    public String transactional(@RequestHeader(name = "trace-id") String traceId) {
-        MDC.put("trace.id", traceId);
-        outerTransactionalService.outerTransaction();
-        return "Transaction is completed!";
-    }
+  @GetMapping(path = "/transactional")
+  public String transactional(@RequestHeader(name = "trace-id") String traceId) {
+    MDC.put("trace.id", traceId);
+    outerTransactionalService.outerTransaction();
+    return "Transaction is completed!";
+  }
 }

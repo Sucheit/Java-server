@@ -2,15 +2,15 @@ package ru.myapp.service;
 
 import java.util.List;
 
-public interface CrudService<Id, RequestDto, ResponseDto, RequestDtoShort> {
+public interface CrudService<I, R1, R2, D> {
 
-    List<RequestDtoShort> getAllEntities();
+  List<D> getAllEntities();
 
-    ResponseDto getEntityById(Id id);
+  R2 getEntityById(I id);
 
-    ResponseDto createEntity(RequestDto requestDto);
+  R2 createEntity(R1 requestDto);
 
-    ResponseDto updateEntity(Id id, RequestDto requestDto);
+  R2 updateEntity(I id, R1 requestDto);
 
-    void deleteEntityById(Id id);
+  void deleteEntityById(I id);
 }

@@ -13,19 +13,19 @@ import ru.arthur.inzhilov.grpc.stubs.HelloWorldServiceGrpc;
 @RequiredArgsConstructor
 public class GrpcClient {
 
-    private final HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub;
+  private final HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub;
 
-    public String greeting(String request) {
-        try {
-            GreetingRequest greetingRequest = GreetingRequest.newBuilder()
-                    .setGreeting(request)
-                    .build();
-            GreetingResponse grpcResponse = stub.greeting(greetingRequest);
+  public String greeting(String request) {
+    try {
+      GreetingRequest greetingRequest = GreetingRequest.newBuilder()
+          .setGreeting(request)
+          .build();
+      GreetingResponse grpcResponse = stub.greeting(greetingRequest);
 
-            return grpcResponse.getResponse();
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error: ", e);
-            throw new RuntimeException("gRPC call failed: " + e.getStatus());
-        }
+      return grpcResponse.getResponse();
+    } catch (StatusRuntimeException e) {
+      log.error("gRPC error: ", e);
+      throw new RuntimeException("gRPC call failed: " + e.getStatus());
     }
+  }
 }

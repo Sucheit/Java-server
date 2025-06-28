@@ -1,11 +1,10 @@
 package ru.myapp.persistence.repository;
 
+import java.util.List;
 import ru.myapp.dto.request.UserRequestDto;
 import ru.myapp.persistence.model.User;
 
-import java.util.List;
-
 public interface UserFilterRepository {
 
-    List<User> getAllUsersByQueryDSL(UserRequestDto userRequestDto);
+  List<User> getAllUsersByQueryDSL(UserRequestDto userRequestDto);
 }

@@ -1,11 +1,10 @@
 package ru.myapp.context;
 
+import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.time.OffsetDateTime;
 
 @Getter
 @ToString
@@ -13,9 +12,9 @@ import java.time.OffsetDateTime;
 @Scope("prototype")
 public class MyPrototypeBean {
 
-    private final OffsetDateTime createTime;
+  private final OffsetDateTime createTime;
 
-    public MyPrototypeBean() {
-        this.createTime = OffsetDateTime.now();
-    }
+  public MyPrototypeBean() {
+    this.createTime = OffsetDateTime.now();
+  }
 }

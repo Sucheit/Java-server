@@ -9,5 +9,5 @@ import ru.myapp.persistence.model.Passport;
 @Mapper(config = MapstructConfig.class, uses = {UserMapper.class})
 public interface PassportMapper {
 
-    PassportResponseDto mapToPassportResponseDto(Passport passport);
+  PassportResponseDto mapToPassportResponseDto(Passport passport);
 }

@@ -12,15 +12,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Setter
@@ -33,36 +32,36 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class User extends AbstractEntity {
 
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+  @NotBlank
+  @Size(min = 2, max = 50)
+  @Column(name = "first_name", nullable = false)
+  private String firstName;
 
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+  @NotBlank
+  @Size(min = 2, max = 50)
+  @Column(name = "last_name", nullable = false)
+  private String lastName;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_groups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
-    @ToString.Exclude
-    private Set<Group> groups = new HashSet<>();
+  @ManyToMany(fetch = FetchType.LAZY,
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinTable(name = "user_groups",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "group_id"))
+  @ToString.Exclude
+  private Set<Group> groups = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", optional = false, cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private Passport passport;
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", optional = false, cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private Passport passport;
 
-    public User(Integer id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+  public User(Integer id, String firstName, String lastName) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+  public User(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 }

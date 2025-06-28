@@ -8,6 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public interface ItemFullInfo {
 
-    @Value("#{'name: ' + target.name + ', description: ' + target.description + ', amount: ' + target.amount + '.'}")
-    String getFullInfo();
+  @Value("#{'name: ' + target.name + ', description: ' + target.description + ', amount: ' + target.amount + '.'}")
+  String getFullInfo();
 }

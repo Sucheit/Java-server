@@ -28,15 +28,15 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "passports")
 public class Passport {
 
-    @Id
-    private Integer id;
+  @Id
+  private Integer id;
 
-    @JoinColumn(name = "user_id", nullable = false)
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    private User user;
+  @JoinColumn(name = "user_id", nullable = false)
+  @OneToOne(fetch = FetchType.LAZY)
+  @MapsId
+  private User user;
 
-    @Column(name = "serial_number")
-    @Size(max = 6)
-    private String serialNumber;
+  @Column(name = "serial_number")
+  @Size(max = 6)
+  private String serialNumber;
 }

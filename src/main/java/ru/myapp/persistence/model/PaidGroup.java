@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.Range;
 @Table(name = "paid_groups")
 public class PaidGroup extends Group {
 
-    @Range(min = 10, max = 1000)
-    @Column(name = "cost", nullable = false)
-    protected Integer cost;
+  @Range(min = 10, max = 1000)
+  @Column(name = "cost", nullable = false)
+  protected Integer cost;
 }

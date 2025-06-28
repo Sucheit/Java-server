@@ -14,11 +14,11 @@ import ru.myapp.service.MessageService;
 @RequestMapping(value = "/batch")
 public class BatchMessageSendController {
 
-    private final MessageService messageService;
+  private final MessageService messageService;
 
-    @GetMapping("/send/{amount}")
-    public String sendBatchMessages(@PathVariable("amount") int amount) {
-        messageService.sendMessages(amount);
-        return "Batch sent!";
-    }
+  @GetMapping("/send/{amount}")
+  public String sendBatchMessages(@PathVariable("amount") int amount) {
+    messageService.sendMessages(amount);
+    return "Batch sent!";
+  }
 }

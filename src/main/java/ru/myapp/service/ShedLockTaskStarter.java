@@ -4,5 +4,5 @@ import java.time.OffsetDateTime;
 
 public interface ShedLockTaskStarter {
 
-    OffsetDateTime startScheduledTaskWithReturn();
+  OffsetDateTime startScheduledTaskWithReturn();
 }

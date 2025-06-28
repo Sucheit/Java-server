@@ -11,32 +11,34 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "kafka")
 public class KafkaProps {
 
-    @NestedConfigurationProperty
-    private BackOff backOff;
-    @NestedConfigurationProperty
-    private Topics topics;
-    @NestedConfigurationProperty
-    private Listener listener;
-    @NestedConfigurationProperty
-    private KafkaProperties connection;
+  @NestedConfigurationProperty
+  private BackOff backOff;
+  @NestedConfigurationProperty
+  private Topics topics;
+  @NestedConfigurationProperty
+  private Listener listener;
+  @NestedConfigurationProperty
+  private KafkaProperties connection;
 
-    @Data
-    public static class Topics {
+  @Data
+  public static class Topics {
 
-        private String users;
-        private String items;
-        private String DLT;
-        private String batchMessages;
-    }
+    private String users;
+    private String items;
+    private String dlt;
+    private String batchMessages;
+  }
 
-    @Data
-    public static class BackOff {
-        private Long interval;
-        private Long attempts;
-    }
+  @Data
+  public static class BackOff {
 
-    @Data
-    public static class Listener {
-        private Integer concurrency;
-    }
+    private Long interval;
+    private Long attempts;
+  }
+
+  @Data
+  public static class Listener {
+
+    private Integer concurrency;
+  }
 }

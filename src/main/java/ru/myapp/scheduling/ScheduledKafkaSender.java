@@ -16,20 +16,20 @@ import ru.myapp.kafka.publisher.MessagePublisher;
 @ConditionalOnProperty(prefix = "activity", name = "kafka-sender", havingValue = "true")
 public class ScheduledKafkaSender {
 
-    private final MessagePublisher messagePublisher;
-    private final KafkaProps kafkaProps;
+  private final MessagePublisher messagePublisher;
+  private final KafkaProps kafkaProps;
 
-    private static ItemRequestDto getItemRequestDto() {
-        return ItemRequestDto.builder()
-                .name("Item name")
-                .description("Item description")
-                .amount(10)
-                .build();
-    }
+  private static ItemRequestDto getItemRequestDto() {
+    return ItemRequestDto.builder()
+        .name("Item name")
+        .description("Item description")
+        .amount(10)
+        .build();
+  }
 
-    @Async("taskExecutor")
-    @Scheduled(fixedRate = 5000)
-    public void scheduledKafkaSender() {
-        messagePublisher.publish(kafkaProps.getTopics().getItems(), getItemRequestDto());
-    }
+  @Async("taskExecutor")
+  @Scheduled(fixedRate = 5000)
+  public void scheduledKafkaSender() {
+    messagePublisher.publish(kafkaProps.getTopics().getItems(), getItemRequestDto());
+  }
 }

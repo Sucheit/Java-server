@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ItemProjection {
 
-    private String name;
+  private String name;
 
-    private String description;
+  private String description;
 }

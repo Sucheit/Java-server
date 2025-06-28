@@ -19,22 +19,23 @@ import ru.myapp.service.PassportService;
 @RequestMapping("/passports")
 public class PassportController {
 
-    private final PassportService passportService;
+  private final PassportService passportService;
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<PassportResponseDto> getPassportByUserId(@PathVariable Integer userId) {
-        return ResponseEntity.ok(passportService.getPasswordByUserId(userId));
-    }
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<PassportResponseDto> getPassportByUserId(@PathVariable Integer userId) {
+    return ResponseEntity.ok(passportService.getPasswordByUserId(userId));
+  }
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<PassportResponseDto> createPassportForUser(
-            @PathVariable Integer userId,
-            @RequestBody @Valid PassportRequestDto passportRequestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(passportService.createPassport(userId, passportRequestDto));
-    }
+  @PostMapping("/user/{userId}")
+  public ResponseEntity<PassportResponseDto> createPassportForUser(
+      @PathVariable Integer userId,
+      @RequestBody @Valid PassportRequestDto passportRequestDto) {
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(passportService.createPassport(userId, passportRequestDto));
+  }
 
-    @GetMapping("/{passportId}")
-    public ResponseEntity<PassportResponseDto> getPassportById(@PathVariable Integer passportId) {
-        return ResponseEntity.ok(passportService.getPasswordById(passportId));
-    }
+  @GetMapping("/{passportId}")
+  public ResponseEntity<PassportResponseDto> getPassportById(@PathVariable Integer passportId) {
+    return ResponseEntity.ok(passportService.getPasswordById(passportId));
+  }
 }

@@ -6,7 +6,7 @@ package ru.myapp.persistence.model;
  */
 public interface ItemView {
 
-    String getName();
+  String getName();
 
-    Integer getAmount();
+  Integer getAmount();
 }

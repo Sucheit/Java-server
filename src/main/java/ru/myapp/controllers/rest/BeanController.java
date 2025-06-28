@@ -1,5 +1,6 @@
 package ru.myapp.controllers.rest;
 
+import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -11,39 +12,37 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.myapp.context.BeanRemover;
 import ru.myapp.context.BeanToBeDeleted;
 
-import java.time.OffsetDateTime;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "bean")
 public class BeanController {
 
-    private final BeanRemover beanRemover;
+  private final BeanRemover beanRemover;
 
-    @Lazy
-    private final BeanToBeDeleted beanToBeDeleted;
+  @Lazy
+  private final BeanToBeDeleted beanToBeDeleted;
 
-    @GetMapping
-    public OffsetDateTime getTime() {
-        return beanToBeDeleted.getCurrentTime();
-    }
+  @GetMapping
+  public OffsetDateTime getTime() {
+    return beanToBeDeleted.getCurrentTime();
+  }
 
-    @PostMapping(path = "/start")
-    public String startSmartCycle() {
-        beanRemover.start();
-        return "SmartCycle started!";
-    }
+  @PostMapping(path = "/start")
+  public String startSmartCycle() {
+    beanRemover.start();
+    return "SmartCycle started!";
+  }
 
-    @PostMapping(path = "/stop")
-    public String stopSmartCycle() {
-        beanRemover.stop();
-        return "SmartCycle stopped!";
-    }
+  @PostMapping(path = "/stop")
+  public String stopSmartCycle() {
+    beanRemover.stop();
+    return "SmartCycle stopped!";
+  }
 
-    @PostMapping(path = "/{beanName}")
-    public String deleteBean(@PathVariable(name = "beanName") String beanName) {
-        beanRemover.removeSingletonBean(beanName);
-        return beanName + " is deleted from context";
-    }
+  @PostMapping(path = "/{beanName}")
+  public String deleteBean(@PathVariable(name = "beanName") String beanName) {
+    beanRemover.removeSingletonBean(beanName);
+    return beanName + " is deleted from context";
+  }
 }

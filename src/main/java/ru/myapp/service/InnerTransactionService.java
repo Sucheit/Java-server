@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class InnerTransactionService {
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void innerTransaction() {
-        log.info("inner transaction");
-    }
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public void innerTransaction() {
+    log.info("inner transaction");
+  }
 }

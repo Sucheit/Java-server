@@ -14,10 +14,10 @@ import ru.myapp.grpc.GrpcClient;
 @RequestMapping(path = "/grpc")
 public class GrpcController {
 
-    private final GrpcClient grpcClient;
+  private final GrpcClient grpcClient;
 
-    @PostMapping(path = "/{name}")
-    public String getGreeting(@PathVariable(name = "name") String name) {
-        return grpcClient.greeting(name);
-    }
+  @PostMapping(path = "/{name}")
+  public String getGreeting(@PathVariable(name = "name") String name) {
+    return grpcClient.greeting(name);
+  }
 }

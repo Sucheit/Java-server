@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OuterTransactionalService {
 
-    private final InnerTransactionService innerTransactionService;
+  private final InnerTransactionService innerTransactionService;
 
-    @Transactional
-    public void outerTransaction() {
-        MDC.put("transaction.owner", Thread.currentThread().getName());
-        log.info("outerTransaction");
-        innerTransactionService.innerTransaction();
-    }
+  @Transactional
+  public void outerTransaction() {
+    MDC.put("transaction.owner", Thread.currentThread().getName());
+    log.info("outerTransaction");
+    innerTransactionService.innerTransaction();
+  }
 }

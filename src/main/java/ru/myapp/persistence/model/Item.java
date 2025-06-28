@@ -6,6 +6,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Instant;
-
 @Entity
 @Setter
 @Getter
@@ -33,31 +32,31 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public class Item extends AbstractEntity {
 
-    @Size(min = 3, max = 255)
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Size(min = 3, max = 255)
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Size(min = 5, max = 255)
-    @Column(name = "description", nullable = false)
-    private String description;
+  @Size(min = 5, max = 255)
+  @Column(name = "description", nullable = false)
+  private String description;
 
-    @Positive
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
+  @Positive
+  @Column(name = "amount", nullable = false)
+  private Integer amount;
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private Instant createdAt;
+  @CreatedDate
+  @Column(name = "created_at")
+  private Instant createdAt;
 
-    @CreatedBy
-    @Column(name = "created_by")
-    private String createdBy;
+  @CreatedBy
+  @Column(name = "created_by")
+  private String createdBy;
 
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private Instant updatedAt;
+  @LastModifiedDate
+  @Column(name = "updated_at")
+  private Instant updatedAt;
 
-    @LastModifiedBy
-    @Column(name = "updated_by")
-    private String updatedBy;
+  @LastModifiedBy
+  @Column(name = "updated_by")
+  private String updatedBy;
 }

@@ -9,8 +9,9 @@ import ru.arthur.inzhilov.grpc.stubs.HelloWorldServiceGrpc;
 @Configuration
 public class GrpcClientConfig {
 
-    @Bean
-    public HelloWorldServiceGrpc.HelloWorldServiceBlockingStub exampleServiceBlockingStub(@GrpcClient("greeting") Channel channel) {
-        return HelloWorldServiceGrpc.newBlockingStub(channel);
-    }
+  @Bean
+  public HelloWorldServiceGrpc.HelloWorldServiceBlockingStub exampleServiceBlockingStub(
+      @GrpcClient("greeting") Channel channel) {
+    return HelloWorldServiceGrpc.newBlockingStub(channel);
+  }
 }
