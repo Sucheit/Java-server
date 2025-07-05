@@ -1,5 +1,6 @@
 package ru.myapp.service.impl;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import ru.myapp.config.kafka.KafkaProps;
 import ru.myapp.dto.request.BatchMessage;
 import ru.myapp.dto.request.MessagePublisherDto;
@@ -22,6 +26,7 @@ import ru.myapp.kafka.publisher.BatchMessagePublisher;
 import ru.myapp.mappers.MessageMapper;
 import ru.myapp.persistence.model.Message;
 import ru.myapp.persistence.repository.MessageRepository;
+import ru.myapp.service.MessageAsyncService;
 import ru.myapp.service.MessageService;
 import ru.myapp.utils.Constants;
 
@@ -35,6 +40,8 @@ public class MessageServiceImpl implements MessageService {
   @Qualifier("batchMessagePublisherImpl")
   private final BatchMessagePublisher messagePublisher;
   private final KafkaProps kafkaProps;
+  private final MessageAsyncService messageAsyncService;
+  private final TransactionTemplate transactionTemplate;
 
   @Override
   @Transactional
@@ -72,5 +79,46 @@ public class MessageServiceImpl implements MessageService {
             () -> new NotFoundException(
                 "Message not found with messageId=%s".formatted(messageId)));
     return messageMapper.toResponseDto(message);
+  }
+
+  @Override
+  @Transactional
+  public void updateMessages() {
+    List<Message> messages = messageRepository.findAll();
+    log.info("Found message size = {}", messages.size());
+    messages.forEach(message -> processInnerTransaction(message.getId()));
+    TransactionSynchronizationManager.registerSynchronization(
+        new TransactionSynchronization() {
+          @Override
+          public void afterCommit() {
+            log.info("Outer transaction committed on thread: {}",
+                Thread.currentThread().threadId());
+          }
+        }
+    );
+  }
+
+  public void processInnerTransaction(Integer id) {
+    transactionTemplate.executeWithoutResult(status -> {
+      try {
+        Message message = messageRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Message not found by id=%s".formatted(id)));
+        message.setMessage(message.getMessage().substring(0, 36) + ": " + OffsetDateTime.now());
+        messageRepository.save(message);
+        TransactionSynchronizationManager.registerSynchronization(
+            new TransactionSynchronization() {
+              @Override
+              public void afterCommit() {
+                log.info("Inner transaction committed on id = {} on thread: {}",
+                    id,
+                    Thread.currentThread().threadId());
+              }
+            }
+        );
+      } catch (Exception e) {
+        log.error("Error happened in inner transaction", e);
+        status.setRollbackOnly();
+      }
+    });
   }
 }

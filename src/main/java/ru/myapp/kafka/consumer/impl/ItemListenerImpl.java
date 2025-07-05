@@ -24,7 +24,7 @@ public class ItemListenerImpl {
       containerFactory = "kafkaListenerContainerFactory",
       errorHandler = "validationErrorHandler",
       properties = {"spring.json.value.default.type=ru.myapp.dto.request.ItemRequestDto"})
-  @SendTo("#{kafkaProps.topics.DLT}")
+  @SendTo("#{kafkaProps.topics.dlt}")
   public void listenMessage(@Payload @Valid ItemRequestDto itemRequestDto) {
     log.info("Kafka received: {}", itemRequestDto);
     itemsScheduledExecutorService.schedule(() -> saveItem(itemRequestDto), 5, TimeUnit.SECONDS);

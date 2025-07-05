@@ -107,6 +107,7 @@ logging:
         transaction: debug
         cache: trace
         kafka: info
+        orm.jpa: info
       apache.kafka: info
       hibernate:
         SQL: debug

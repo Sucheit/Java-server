@@ -25,7 +25,7 @@ public class UserListenerImpl {
       containerFactory = "kafkaListenerContainerFactory",
       errorHandler = "validationErrorHandler",
       properties = {"spring.json.value.default.type=ru.myapp.dto.request.UserRequestDto"})
-  @SendTo("#{kafkaProps.topics.DLT}")
+  @SendTo("#{kafkaProps.topics.dlt}")
   public void listenMessage(@Payload @Valid UserRequestDto userRequestDto) {
     log.info("Kafka received: {}", userRequestDto);
 
