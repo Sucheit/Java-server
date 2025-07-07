@@ -36,8 +36,7 @@ public class MessageController {
   }
 
   @PostMapping("/transactions-test")
-  public String testInnerTransactions() {
-    messageService.updateMessages();
-    return "Test completed!";
+  public Integer testInnerTransactions() {
+    return messageService.updateMessages();
   }
 }

@@ -20,7 +20,7 @@ public class MessageAsyncService {
   private final TransactionTemplate transactionTemplate;
   private final MessageRepository messageRepository;
 
-  @Async("taskExecutor")
+  @Async("newVirtualThreadPerTaskExecutor")
   public void processInnerTransaction(Integer id) {
     transactionTemplate.executeWithoutResult(status -> {
       try {

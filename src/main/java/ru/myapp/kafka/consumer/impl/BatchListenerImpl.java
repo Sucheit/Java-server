@@ -18,7 +18,7 @@ import ru.myapp.service.MessageService;
 @RequiredArgsConstructor
 public class BatchListenerImpl {
 
-  @Qualifier("taskExecutor")
+  @Qualifier("newVirtualThreadPerTaskExecutor")
   private final ExecutorService executor;
   private final MessageService messageService;
 

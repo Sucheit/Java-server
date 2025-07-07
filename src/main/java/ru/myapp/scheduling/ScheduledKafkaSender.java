@@ -27,7 +27,7 @@ public class ScheduledKafkaSender {
         .build();
   }
 
-  @Async("taskExecutor")
+  @Async("newVirtualThreadPerTaskExecutor")
   @Scheduled(fixedRate = 5000)
   public void scheduledKafkaSender() {
     messagePublisher.publish(kafkaProps.getTopics().getItems(), getItemRequestDto());

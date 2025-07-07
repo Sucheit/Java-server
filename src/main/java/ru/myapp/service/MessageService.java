@@ -16,6 +16,5 @@ public interface MessageService {
 
   MessageResponseDto getMessageByMessageId(String messageId);
 
-  void updateMessages();
-
+  Integer updateMessages();
 }

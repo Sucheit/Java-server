@@ -4,7 +4,11 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +30,6 @@ import ru.myapp.kafka.publisher.BatchMessagePublisher;
 import ru.myapp.mappers.MessageMapper;
 import ru.myapp.persistence.model.Message;
 import ru.myapp.persistence.repository.MessageRepository;
-import ru.myapp.service.MessageAsyncService;
 import ru.myapp.service.MessageService;
 import ru.myapp.utils.Constants;
 
@@ -40,8 +43,9 @@ public class MessageServiceImpl implements MessageService {
   @Qualifier("batchMessagePublisherImpl")
   private final BatchMessagePublisher messagePublisher;
   private final KafkaProps kafkaProps;
-  private final MessageAsyncService messageAsyncService;
   private final TransactionTemplate transactionTemplate;
+  @Qualifier("newVirtualThreadPerTaskExecutor")
+  private final ExecutorService executorService;
 
   @Override
   @Transactional
@@ -83,10 +87,8 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   @Transactional
-  public void updateMessages() {
-    List<Message> messages = messageRepository.findAll();
-    log.info("Found message size = {}", messages.size());
-    messages.forEach(message -> processInnerTransaction(message.getId()));
+  public Integer updateMessages() {
+    log.info("update Messages started! thread: {}", Thread.currentThread().threadId());
     TransactionSynchronizationManager.registerSynchronization(
         new TransactionSynchronization() {
           @Override
@@ -96,21 +98,25 @@ public class MessageServiceImpl implements MessageService {
           }
         }
     );
-  }
 
-  public void processInnerTransaction(Integer id) {
-    transactionTemplate.executeWithoutResult(status -> {
+    List<Message> messages = messageRepository.findAll();
+    log.info("Found message size = {}", messages.size());
+
+    Set<String> result = new CopyOnWriteArraySet<>();
+
+    List<Runnable> tasks = new ArrayList<>();
+
+    messages.forEach(message -> tasks.add(() -> transactionTemplate.executeWithoutResult(status -> {
       try {
-        Message message = messageRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("Message not found by id=%s".formatted(id)));
         message.setMessage(message.getMessage().substring(0, 36) + ": " + OffsetDateTime.now());
         messageRepository.save(message);
+        result.add(message.getMessage());
         TransactionSynchronizationManager.registerSynchronization(
             new TransactionSynchronization() {
               @Override
               public void afterCommit() {
                 log.info("Inner transaction committed on id = {} on thread: {}",
-                    id,
+                    message.getId(),
                     Thread.currentThread().threadId());
               }
             }
@@ -119,6 +125,16 @@ public class MessageServiceImpl implements MessageService {
         log.error("Error happened in inner transaction", e);
         status.setRollbackOnly();
       }
-    });
+    })));
+
+    List<CompletableFuture<Void>> futures = tasks.stream()
+        .map(task -> CompletableFuture.runAsync(task, executorService))
+        .toList();
+
+    CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+    allFutures.join();
+    log.info("update Messages ended! thread: {}", Thread.currentThread().threadId());
+    return result.size();
   }
 }

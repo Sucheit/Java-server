@@ -5,15 +5,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @Configuration
-public class Config {
+public class ExecutorsConfig {
 
   @Bean
-  public ExecutorService taskExecutor() {
+  @Primary
+  public ExecutorService newVirtualThreadPerTaskExecutor() {
     return Executors.newVirtualThreadPerTaskExecutor();
+  }
+
+  @Bean
+  public ExecutorService newFixedThreadPool() {
+    return Executors.newFixedThreadPool(30);
   }
 
   @Bean

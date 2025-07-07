@@ -20,7 +20,7 @@ public class ScheduledServiceActive {
   private final ActivityToggle activityToggle;
   private final Counter scheduledTaskCounter;
 
-  @Async("taskExecutor")
+  @Async("newVirtualThreadPerTaskExecutor")
   @Scheduled(fixedRate = 5000)
   @SchedulerLock(name = "scheduledTask", lockAtMostFor = "30s", lockAtLeastFor = "15s")
   public void scheduledTask() {
