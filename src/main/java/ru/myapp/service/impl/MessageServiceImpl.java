@@ -130,7 +130,7 @@ public class MessageServiceImpl implements MessageService {
     })));
 
     List<CompletableFuture<Void>> futures = tasks.stream()
-        .map(task -> CompletableFuture.runAsync(task, virtualExecutorService))
+        .map(CompletableFuture::runAsync)
         .toList();
 
     CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
