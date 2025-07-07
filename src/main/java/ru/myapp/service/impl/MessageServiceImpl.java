@@ -133,9 +133,8 @@ public class MessageServiceImpl implements MessageService {
         .map(CompletableFuture::runAsync)
         .toList();
 
-    CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+    CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
-    allFutures.join();
     log.info("update Messages ended! thread: {}", Thread.currentThread().threadId());
     return result.size();
   }
