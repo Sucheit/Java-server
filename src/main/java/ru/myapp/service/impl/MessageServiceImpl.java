@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
   private final TransactionTemplate transactionTemplate;
   @Qualifier("newVirtualThreadPerTaskExecutor")
   private final ExecutorService virtualExecutorService;
-  @Qualifier("taskExecutor")
+  @Qualifier("threadPoolTaskExecutor")
   private final TaskExecutor taskExecutor;
 
   @Override
