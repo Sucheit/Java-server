@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -47,7 +47,8 @@ public class MessageServiceImpl implements MessageService {
   private final TransactionTemplate transactionTemplate;
   @Qualifier("newVirtualThreadPerTaskExecutor")
   private final ExecutorService virtualExecutorService;
-  private final ThreadPoolTaskExecutor taskExecutor;
+  @Qualifier("taskExecutor")
+  private final TaskExecutor taskExecutor;
 
   @Override
   @Transactional
@@ -130,7 +131,7 @@ public class MessageServiceImpl implements MessageService {
     })));
 
     List<CompletableFuture<Void>> futures = tasks.stream()
-        .map(CompletableFuture::runAsync)
+        .map(task -> CompletableFuture.runAsync(task, taskExecutor))
         .toList();
 
     CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
