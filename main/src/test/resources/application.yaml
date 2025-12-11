@@ -1,0 +1,120 @@
+server:
+  port: 8080
+
+activity:
+  enabled: false
+  kafka-sender: false
+
+spring:
+  application:
+    name: myapp
+  profiles:
+    active: local,ift
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  datasource:
+    url: jdbc:postgresql://localhost:5430/postgres_db
+    username: postgres_user
+    password: postgres_password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      auto-commit: false
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        format_sql: true
+        hbm2ddl.auto: update
+        use_sql_comments: true
+        highlight_sql: true
+        jdbc:
+          batch_size: 20
+          batch_versioned_data: true
+          order_inserts: true
+          order_updates: true
+    show-sql: false
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.yaml
+    liquibase-schema: public
+    database-change-log-lock-table: database_change_log_lock_table
+    database-change-log-table: database_change_log_table
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  threads:
+    virtual:
+      enabled: true
+
+kafka:
+  topics:
+    users: users
+    items: items
+    DLT: DLT
+    batch-messages: batch-messages
+  back-off:
+    interval: 5000
+    attempts: 3
+  listener:
+    concurrency: 3
+  connection:
+    bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+    consumer:
+      groupId: consumer-id
+      clientId: consumer-client-di
+    producer:
+      clientId: producer-client-id
+    security:
+      protocol: PLAINTEXT
+    ssl:
+      trust-store-location: ""
+      trust-store-type: ""
+      trust-store-password: ""
+      key-store-location: ""
+      key-store-type: ""
+      key-store-password: ""
+      key-password: ""
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui-custom.html
+
+logging:
+  config: classpath:logback.xml
+  level:
+    ru.myapp: info
+    root: info
+    org:
+      springframework:
+        web: info
+        transaction: debug
+        cache: trace
+        kafka: info
+        orm.jpa: info
+      apache.kafka: info
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace
+    spring.kafka: info
+
+feign:
+  okhttp:
+    enabled: true
+  client:
+    name: todos-client
+    url: https://jsonplaceholder.typicode.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,env,health,info,caches,beans,activity,scheduledtasks,conditions,env,shutdown,threaddump,metrics,loggers,heapdump,refresh
+
+
